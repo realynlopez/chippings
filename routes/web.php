@@ -28,6 +28,12 @@ Route::group(['middleware'=> 'auth'],function() {
         return "Hi";
     });
 });
+Route::middleware(['auth', 'checkrole:admin'])->group(function () {
+    Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
+});
+Route::middleware(['auth', 'checkrole:cashier'])->group(function () {
+    Route::get('/cashier/dashboard', 'CashierController@dashboard')->name('cashier.dashboard');
+});
 Route::get('/menu', [AuthManager::class, 'showMenu'])->name('menu');
 Route::post('/menu', [AuthManager::class, 'menupost'])->name('menu.post');
 Route::get('/about', [AuthManager::class, 'showAbout'])->name('about');

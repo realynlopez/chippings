@@ -32,7 +32,18 @@ class AuthManager extends Controller
     
         $credentials = $request->only(['email', 'password']);
         if (Auth::attempt($credentials)) {
-            return redirect()->intended(route('home'));
+            $user = Auth::user();
+    
+            switch ($user->role) {
+            case 'admin':
+                return redirect()->intended(route('admin.dashboard'));
+            case 'cashier':
+                return redirect()->intended(route('cashier.dashboard'));
+            // Add cases for other roles (rider, customer) as needed
+            default:
+                return redirect()->intended(route('home'));
+            }   
+
         }
     
         return redirect(route('login'))->with("error", "Login details are not valid");
@@ -94,3 +105,4 @@ class AuthManager extends Controller
         return redirect()->route('menu')->with('success', 'Post request successful.');
     }
 }
+
