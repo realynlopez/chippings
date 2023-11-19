@@ -10,99 +10,100 @@ use Illuminate\Support\Facades\Session;
 
 class AuthManager extends Controller
 {
-    function login(){
-        if (Auth::check()){
-            return redirect(route('home'));
+    /*public function index()
+    {
+        // Your logic to check if the user is authenticated
+        if (!auth()->check()) {
+            // Redirect to the login page
+            return redirect()->route('registration');
         }
+    }*/
+
+    public function login()
+    {
+        if (Auth::check()) {
+            return redirect()->route($this->getDashboardRoute());
+        }
+
         return view('login');
     }
 
-    function registration(){
-        if (Auth::check()){
-            return redirect(route('home'));
+    public function registration()
+    {
+        if (Auth::check()) {
+            return redirect()->route($this->getDashboardRoute());
         }
-        return view('registration');
-    }   
 
-    function loginpost(Request $request){
+        return view('registration');
+    }
+
+    public function loginpost(Request $request)
+    {
         $request->validate([
-            'email' => 'required',
-            'password' => 'required'
+            'email' => 'required|email',
+            'password' => 'required',
+            'role' => 'required', // Corrected typo here
         ]);
-    
-        $credentials = $request->only(['email', 'password']);
+
+        $credentials = $request->only(['email', 'password', 'role']);
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-    
+
             switch ($user->role) {
-            case 'admin':
-                return redirect()->intended(route('admin.dashboard'));
-            case 'cashier':
-                return redirect()->intended(route('cashier.dashboard'));
-            // Add cases for other roles (rider, customer) as needed
-            default:
-                return redirect()->intended(route('home'));
-            }   
-
+                case 'admin':
+                    return redirect()->intended(route('admin.dashboard'));
+                case 'cashier':
+                    return redirect()->intended(route('cashier.dashboard'));
+                case 'rider':
+                    return redirect()->intended(route('rider.dashboard'));
+                case 'customer':
+                    return redirect()->intended(route('customer.dashboard'));
+                default:
+                    return redirect()->intended(route('home'));
+            }
         }
-    
-        return redirect(route('login'))->with("error", "Login details are not valid");
-    }
-    
 
-    function registrationpost(Request $request){
+        return redirect(route('login'))->with("error", "Incorrect login information");
+    }
+
+    public function registrationpost(Request $request)
+    {
         $request->validate([
-            "name"=> "required",
-            "email"=> "required|email|unique:users",
-            "password"=> "required"
+            "name" => "required",
+            "email" => "required|email|unique:users",
+            "password" => "required",
+            "role" => "required", 
         ]);
 
-        $data['name']=$request->name;
-        $data['email']=$request->email;
-        $data['password']=Hash::make($request->password);
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            "role" => $request->role, 
+        ];
+
         $user = User::create($data);
-        if(!$user){
-            return redirect(route('registration'))->with ("error","Registration failed, try again");
+
+        if (!$user) {
+            return redirect()->route('registration')->with("error", "Registration failed, try again");
         }
-        return redirect(route('login'))->with ("success","Registration success, Login to access the app");
+
+        return redirect()->route('login')->with("success", "Registration success, Login to access the app");
     }
 
-    function logout(){
-        Session::flush();
+    public function logout()
+    {
         Auth::logout();
-        return redirect(route('login'));
+
+        return redirect()->route('login');
     }
 
-    function showHome(){
-        return view('home');
-    }
-    function homepost(Request $request)
+
+    public function admin()
     {
-        // Handle the logic for processing the POST request
-        // You can access form data using $request->input('your_input_name')
-
-        return redirect()->route('home')->with('success', 'Post request successful.');
-    }
-    function showAbout(){
-        return view('about');
-    }
-    function aboutpost(Request $request)
-    {
-        // Handle the logic for processing the POST request
-        // You can access form data using $request->input('your_input_name')
-
-        return redirect()->route('about')->with('success', 'Post request successful.');
+        return view('admin.dashboard');
     }
 
-    function showMenu(){
-        return view('menu');
-    }
-    function menupost(Request $request)
-    {
-        // Handle the logic for processing the POST request
-        // You can access form data using $request->input('your_input_name')
 
-        return redirect()->route('menu')->with('success', 'Post request successful.');
-    }
 }
-

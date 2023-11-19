@@ -1,56 +1,89 @@
-@extends('layout')
-@section('title', 'registration')
+@extends('reg-layout')
+@section('title', 'Registration')
+@section('additional_css')
+    <link href="{{ asset('assets/css/reg-style.css') }}" rel="stylesheet">
+@endsection
+
+@section('additional_js')
+    <script src="{{ asset('assets/js/reg-script.js') }}"></script>
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="mt-5">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="reg-style.css">
+</head>
+
+<body>
+
+<div class="container text-center mx-auto">
+    <div class="mt-5 mb-1">
         @if($errors->any())
             <div class="col-12">
                 @foreach($errors->all() as $error)
-                    <div class="alert alert-danger">{{$error}}</div>
+                    <div class="alert alert-danger alert-sm">{{$error}}</div>
                 @endforeach
             </div>
         @endif
 
         @if(session()->has('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
+            <div class="alert alert-danger alert-sm">{{ session('error') }}</div>
         @endif
 
-        @if(session()->has('success')) {{-- Note the correct spelling 'success' instead of 'sucess' --}}
-            <div class="alert alert-danger">{{ session('success') }}</div>
+        @if(session()->has('success'))
+            <div class="alert alert-success alert-sm">{{ session('success') }}</div>
         @endif
     </div>
 
+    <!-- Laravel Blade Form -->
+    <form action="{{ route('registration.post') }}" method="POST" class="ms-auto me-auto mt-1" style="width: 100%">
+        @csrf
+        <h1>Create Account</h1>
+        <div class="social-icons">
+            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your email for registration</span>
+        <div class="mb-1">
+            <input type="text" class="form-control" placeholder="Name" name="name">
+        </div>
+        <div class="mb-1">
+            <input type="email" class="form-control" placeholder="Email" name="email">
+        </div>
+        <div class="mb-1">
+            <input type="password" class="form-control" placeholder="Password" name="password">
+        </div>
+        <div class="mb-1">
+            <label for="job" class="form-label">Choose User</label>
+            <select class="form-select" name="job" id="job">
+                <option disabled selected>Option</option>
+                <option value="Admin">Admin</option>
+                <option value="Cashier">Cashier</option>
+                <option value="Kitchen">Kitchen</option>
+                <option value="Rider">Rider</option>
+                <option value="Customer">Customer</option>
+            </select>
+        </div>
+        <!-- Login link -->
+         <span>Already have an account? <a href="{{ route('login') }}">Sign in</a></span>
+        <div class="mb-5">
+            <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+        </div>
+    </form>
+</div>
 
-        <form action="{{route('registration.post')}}" method="POST" class="ms-auto me-auto mt-auto" style="width: 500px">
-            @csrf
-            <div class="mb-3">
-                <label class="form-label">Fullname</label>
-                <input type="name" class="form-control" name="name">
-            </div>    
-            <div class="mb-3">
-                <label class="form-label">Email address</label>
-                <input type="email" class="form-control" name="email">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" class="form-control" name="password">
-            </div>
-            <div class="col-md-6">
-                    <label for="job" class="form-label">Choose User</label>
-                    <select class="form-select" name="job" id="job">
-                        <option disabled selected>Option</option>
-                        <option value="Pastry Chef">Admin</option>
-                        <option value="Catering Manager">Cashier</option>
-                        <option value="Maintenance Worker">Kitchen</option>
-                        <option value="Parking lot attendant">Rider</option>
-                        <option value="Reservations Agent">Customer</option>
-                    </select>
-                </div>
-            <br>
-            <div class="mb-3 ">
-                <input class="btn btn-primary btn-lg" type="submit" value="Submit">
-            </div>
-            <br>
-        </form>
-    </div>
+<!-- Bootstrap JS and other scripts if needed -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+</body>
+
 @endsection
