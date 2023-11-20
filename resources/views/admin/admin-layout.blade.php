@@ -8,24 +8,18 @@
     <!-- Include additional CSS files for the admin panel from the public/css folder -->
     @yield('additional_css')
     <!-- Include your custom CSS file for the admin panel -->
-    <link rel="stylesheet" href="{{ asset('css/admin-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-index.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-orders.css') }}">
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Admin Panel</a>
-            <!-- Add your navigation links, user profile, etc. here -->
-        </div>
-    </nav>
-
-    <div class="container mt-4">
-        @yield('content')
-    </div>
-
+    @yield('content')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Include additional JS files for the admin panel from the public/js folder -->
     @yield('additional_js')
     <!-- Include your custom JS file for the admin panel -->
-    <script src="{{ asset('js/admin-script.js') }}"></script>
+    <script src="{{ asset('assets/js/admin-index.js') }}"></script>
+    <script src="{{ asset('assets/js/admin-orders.js') }}"></script>
+
 </body>
 </html>

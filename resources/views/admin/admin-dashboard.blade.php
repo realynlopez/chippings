@@ -1,16 +1,23 @@
-@extends('admin-layout')
+@extends('admin.admin-layout')
 @section('title', 'Admin')
+@section('additional_css')
+    <!-- Include additional CSS files for the registration panel here -->
+    <!-- For example, you can link your custom CSS file -->
+    <link href="{{ asset('assets/css/admin-style.css') }}" rel="stylesheet">
+@endsection
 
-<h1>Welcome, {{ $admin->name }}!</h1>
+@section('additional_js')
+    <!-- Include additional JS files for the registration panel here -->
+    <!-- For example, you can link your custom JS file -->
+    <script src="{{ asset('assets/js/admin-index.js') }}"></script>
+    <script src="{{ asset('assets/js/admin-orders.js') }}"></script>
+    <script src="orders.js"></script>
+    <script src="index.js"></script>
+@endsection
 
-<p>List of all admins:</p>
-<ul>
-    @foreach($allAdmins as $admin)
-        <li>{{ $admin->name }}</li>
-    @endforeach
-</ul>
 
 @section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,17 +26,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title>Eskinita by Chippings</title>
 </head>
 
 <body>
+
     <div class="container">
         <!-- Sidebar Section -->
         <aside>
             <div class="toggle">
                 <div class="logo">
-                    <img src="images/logo.png">
-                    <h2>Asmr<span class="danger">Prog</span></h2>
+                    <img src="assets/images/logo-chippings.jpg">
+                    <h3>Eskinita<span class="danger">by Chippings</span></h3>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -37,13 +44,13 @@
                     </span>
                 </div>
             </div>
-
+            <!--sidebar-->
             <div class="sidebar">
                 <a href="#">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
-                    <h3>Dashboard</h3>
+                    <h3>Transactions</h3>
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">
@@ -61,7 +68,7 @@
                     <span class="material-icons-sharp">
                         insights
                     </span>
-                    <h3>Analytics</h3>
+                    <h3>Dashboard</h3>
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">
@@ -106,14 +113,14 @@
 
         <!-- Main Content -->
         <main>
-            <h1>Analytics</h1>
+            <h1>Dashboard</h1>
             <!-- Analyses -->
             <div class="analyse">
                 <div class="sales">
                     <div class="status">
                         <div class="info">
-                            <h3>Total Sales</h3>
-                            <h1>$65,024</h1>
+                            <h3>Daily Sales</h3>
+                            <h1>65,024</h1>
                         </div>
                         <div class="progresss">
                             <svg>
@@ -128,7 +135,7 @@
                 <div class="visits">
                     <div class="status">
                         <div class="info">
-                            <h3>Site Visit</h3>
+                            <h3>Percentage Sale</h3>
                             <h1>24,981</h1>
                         </div>
                         <div class="progresss">
@@ -145,7 +152,7 @@
                     <div class="status">
                         <div class="info">
                             <h3>Searches</h3>
-                            <h1>14,147</h1>
+                            <h1>1,147</h1>
                         </div>
                         <div class="progresss">
                             <svg>
@@ -165,22 +172,22 @@
                 <h2>New Users</h2>
                 <div class="user-list">
                     <div class="user">
-                        <img src="images/profile-2.jpg">
-                        <h2>Jack</h2>
+                        <img src="assets/images/profile-2.jpg">
+                        <h2>Arem</h2>
                         <p>54 Min Ago</p>
                     </div>
                     <div class="user">
-                        <img src="images/profile-3.jpg">
-                        <h2>Amir</h2>
+                        <img src="assets/images/profile-3.jpg">
+                        <h2>Harvey</h2>
                         <p>3 Hours Ago</p>
                     </div>
                     <div class="user">
-                        <img src="images/profile-4.jpg">
-                        <h2>Ember</h2>
+                        <img src="assets/images/profile-4.jpg">
+                        <h2>Natalie</h2>
                         <p>6 Hours Ago</p>
                     </div>
                     <div class="user">
-                        <img src="images/plus.png">
+                        <img src="assets/images/plus.png">
                         <h2>More</h2>
                         <p>New User</p>
                     </div>
@@ -190,13 +197,13 @@
 
             <!-- Recent Orders Table -->
             <div class="recent-orders">
-                <h2>Recent Orders</h2>
+                <h2>Transactions Per Branch</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Course Name</th>
-                            <th>Course Number</th>
-                            <th>Payment</th>
+                            <th>Daily</th>
+                            <th>Monthly</th>
+                            <th>Yearly</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -229,11 +236,11 @@
 
                 <div class="profile">
                     <div class="info">
-                        <p>Hey, <b>Reza</b></p>
+                        <p>Hey, <b>Rea</b></p>
                         <small class="text-muted">Admin</small>
                     </div>
                     <div class="profile-photo">
-                        <img src="images/profile-1.jpg">
+                        <img src="assets/images/profile-1.jpg">
                     </div>
                 </div>
 
@@ -242,9 +249,9 @@
 
             <div class="user-profile">
                 <div class="logo">
-                    <img src="images/logo.png">
-                    <h2>AsmrProg</h2>
-                    <p>Fullstack Web Developer</p>
+                    <img src="assets/images/logo-chippings.jpg">
+                    <h2>Eskinita by Chippings</h2>
+                    <p>ihaw-ihaw express</p>
                 </div>
             </div>
 
@@ -307,12 +314,8 @@
 
         </div>
 
-
     </div>
-
-    <script src="orders.js"></script>
-    <script src="index.js"></script>
 </body>
 
-</html>`
-@endsecton
+</html>
+@endsection

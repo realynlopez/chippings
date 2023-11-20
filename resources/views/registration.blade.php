@@ -61,8 +61,8 @@
             <input type="password" class="form-control" placeholder="Password" name="password">
         </div>
         <div class="mb-1">
-            <label for="job" class="form-label">Choose User</label>
-            <select class="form-select" name="job" id="job">
+            <label for="role" class="form-label">Choose User</label>
+            <select class="form-select" name="role" id="role">
                 <option disabled selected>Option</option>
                 <option value="Admin">Admin</option>
                 <option value="Cashier">Cashier</option>

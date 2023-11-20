@@ -7,14 +7,16 @@ use App\Http\Controllers\CashierController;
 use App\Http\Controllers\RiderController;
 use App\Http\Controllers\CustomerController;
 
-// Default route for non-authenticated users
+// Default route for all users
 Route::get('/', function () {
-    if (!auth()->check()) {
-        return redirect()->route('registration');
-    }
-
-    return redirect()->route('admin.dashboard');
+    return redirect()->route('dashboard');
 })->name('home');
+
+// Common dashboard route for all users
+Route::get('/dashboard', function () {
+    // Customize this route for your common dashboard view
+    return view('dashboard');
+})->name('dashboard');
 
 // Authentication routes
 Route::get('/login', [AuthManager::class, 'login'])->name('login');
@@ -23,12 +25,14 @@ Route::get('/registration', [AuthManager::class, 'registration'])->name('registr
 Route::post('/registration', [AuthManager::class, 'registrationpost'])->name('registration.post');
 Route::get('/logout', [AuthManager::class, 'logout'])->name('logout');
 
-// Admin routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-    // If you have a separate method for processing admin POST requests, add it here
-    // Route::post('/admin', [AuthManager::class, 'adminpost'])->name('admin.post');
-});
+Route::get('/admin', [AdminController::class, 'admindashboard'])->name('admin.admin-dashboard');
+Route::post('/admin', [AdminController::class, 'adminpost'])->name('admin.post');
+
+// Admin routes (temporarily without authentication)
+/*Route::middleware([])->group(function () {
+    Route::get('/admin', [AdminController::class, 'admindashboard'])->name('admin.dashboard');
+});*/
+
 
 // Authenticated routes
 Route::middleware(['auth'])->group(function () {
@@ -48,10 +52,5 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['customer'])->group(function () {
         Route::get('/customer', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
     });
-
-    // Common dashboard route for authenticated users
-    Route::get('/dashboard', function () {
-        // Customize this route for your common dashboard view
-        return view('dashboard');
-    })->name('dashboard');
 });
+

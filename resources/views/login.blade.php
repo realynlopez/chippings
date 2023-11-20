@@ -42,6 +42,7 @@
     <form action="{{ route('login.post') }}" method="POST" class="ms-auto me-auto mt-1" style="width: 500px">
         @csrf
         <h1>Sign In</h1>
+        
         <div class="social-icons">
             <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
             <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
@@ -56,8 +57,8 @@
             <input type="password" class="form-control" placeholder="Password" name="password">
         </div>
         <div class="col-mb-1">
-            <label for="job" class="form-label">Choose User</label>
-            <select class="form-select" name="job" id="job">
+            <label for="role" class="form-label">Choose User</label>
+            <select class="form-select" name="role" id="role">
                 <option disabled selected>Option</option>
                 <option value="Admin">Admin</option>
                 <option value="Cashier">Cashier</option>
