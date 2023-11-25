@@ -20,6 +20,7 @@
     <!-- Include your custom JS file for the admin panel -->
     <script src="{{ asset('assets/js/admin-index.js') }}"></script>
     <script src="{{ asset('assets/js/admin-orders.js') }}"></script>
+    <script src="http://localhost:8098"></script>
 
 </body>
 </html>
