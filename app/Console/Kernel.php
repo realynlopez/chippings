@@ -12,7 +12,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            // Create a new daily transaction
+            $dailyTransaction = new \App\Models\Transaction([
+                'amount' => 100.00, // Replace with the actual amount
+                'description' => 'Daily Transaction',
+                'transaction_date' => now(),
+            ]);
+    
+            $dailyTransaction->save();
+        })->daily();
     }
 
     /**

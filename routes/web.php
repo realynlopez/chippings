@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthManager;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CashierController;
-use App\Http\Controllers\RiderController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\QueueController;
+
 
 // Default route for all users
 Route::get('/', function () {
@@ -28,6 +30,39 @@ Route::get('/logout', [AuthManager::class, 'logout'])->name('logout');
 Route::get('/admin', [AdminController::class, 'admindashboard'])->name('admin.admin-dashboard');
 Route::post('/admin', [AdminController::class, 'adminpost'])->name('admin.post');
 
+//branches
+Route::get('/laludBranch', [AdminController::class, 'laludBranch'])->name('laludBranch');
+Route::get('/laludBranchWithData', [AdminController::class, 'laludBranchWithData'])->name('laludBranchWithData');
+
+Route::get('/NacocoBranch', [AdminController::class, 'NacocoBranch'])->name('NacocoBranch');
+Route::get('/nacocoBranchWithData', [AdminController::class, 'nacocoBranchWithData'])->name('NacocoBranchWithData');
+
+Route::prefix('admin')->group(function () {
+
+    Route::get('/menu', [AdminController::class, 'manageMenu'])->name('admin.menu');
+    Route::get('/menu/{id}', [AdminController::class, 'showProduct'])->name('admin.menu.show');
+    Route::post('/menu/store', [AdminController::class, 'storeProduct'])->name('admin.menu.store');
+    //Route::get('/queue', [AdminController::class, 'queue'])->name('admin.queue');
+
+});
+
+//Queue
+Route::get('/queue', [QueueController::class, 'index'])->name('queue.index');
+Route::post('/queue/add', [QueueController::class, 'addToQueue'])->name('queue.addToQueue');
+Route::post('/queue/serve-next', [QueueController::class, 'serveNextCustomer'])->name('queue.serveNextCustomer');
+
+// Menu
+Route::get('/admin/menu', [MenuController::class, 'index'])->name('admin.menu.index');
+Route::get('/admin/menu/create', [MenuController::class, 'create'])->name('admin.menu.create');
+Route::post('/admin/menu', [MenuController::class, 'store'])->name('admin.menu.store');
+Route::get('/admin/menu/{id}/edit', [MenuController::class, 'edit'])->name('admin.menu.edit');
+Route::put('/admin/menu/{id}', [MenuController::class, 'update'])->name('admin.menu.update');
+Route::get('/admin/menu/{id}', [AdminController::class, 'showProduct'])->name('admin.menu.show');
+
+
+
+
+
 // Admin routes (temporarily without authentication)
 /*Route::middleware([])->group(function () {
     Route::get('/admin', [AdminController::class, 'admindashboard'])->name('admin.dashboard');
@@ -35,7 +70,7 @@ Route::post('/admin', [AdminController::class, 'adminpost'])->name('admin.post')
 
 
 // Authenticated routes
-Route::middleware(['auth'])->group(function () {
+/*Route::middleware(['auth'])->group(function () {
     // Other authenticated routes go here
 
     // Cashier routes
@@ -52,5 +87,5 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['customer'])->group(function () {
         Route::get('/customer', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
     });
-});
+});*/
 
