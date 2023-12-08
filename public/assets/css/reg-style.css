@@ -9,7 +9,7 @@
 
 body{
     background-color: #c9d6ff;
-    background: linear-gradient(to right, #e2e2e2, rgb(255, 250, 201));
+    background: linear-gradient(to right, #613636, rgb(131, 35, 35));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,11 +47,11 @@ body{
 }
 
 .container button{
-    background-color: #fdcc45;
-    color: #fff;
+    background-color: transparent;
+    color: #642522;
     font-size: 12px;
     padding: 10px 45px;
-    border: 1px solid transparent;
+    border: 1px solid #fdcc45;
     border-radius: 8px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -64,6 +64,25 @@ body{
     background-color: transparent;
     border-color: #fff;
 }
+
+.container button {
+    /* ... existing styles ... */
+    background-color: transparent; /* Remove background color */
+    border: 1px solid #642522;; /* Set border color */
+}
+
+.container button.hidden {
+    /* ... existing styles ... */
+    background-color: transparent;
+    border-color: #fff; /* Set border color for hidden state */
+}
+
+.container button:hover {
+    background-color: #642522;; /* Add background color on hover */
+    color: #fff; /* Change text color on hover */
+}
+
+
 
 .container form {
     background-color: #fff;

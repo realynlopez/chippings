@@ -61,16 +61,14 @@
             <input type="password" class="form-control" placeholder="Password" name="password">
         </div>
         <div class="mb-1">
-            <label for="role" class="form-label">Choose User</label>
-            <select class="form-select" name="role" id="role">
+            <label for="role_id" class="form-label">Choose User</label>
+            <select class="form-select" name="role_id" id="role_id">
                 <option disabled selected>Option</option>
-                <option value="Admin">Admin</option>
-                <option value="Cashier">Cashier</option>
-                <option value="Kitchen">Kitchen</option>
-                <option value="Rider">Rider</option>
-                <option value="Customer">Customer</option>
+                <option value="1">Admin</option>
+                <option value="2">Customer</option>
             </select>
         </div>
+
         <!-- Login link -->
          <span>Already have an account? <a href="{{ route('login') }}">Sign in</a></span>
         <div class="mb-5">

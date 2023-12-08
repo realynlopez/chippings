@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --color-primary: #87201A;
+    --color-danger: #FEBD03;
+    --color-success: #443625;
+    --color-warning: #F7D060;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 1.2rem;
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+.dark-mode-variables {
+    --color-background: #181a1e;
+    --color-white: #202528;
+    --color-dark: #edeffd;
+    --color-dark-variant: #a3bdcc;
+    --color-light: rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+.center-navbar {
+    display: flex;
+    justify-content: center;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: 0;
+    border: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 20px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    user-select: none;
+    overflow-x: hidden;
+    color: var(--color-dark);
+    background-color: var(--color-background);
+}
+
+a {
+    color: var(--color-dark);
+}
+
+/* Navigation Bar */
+/* Navigation Bar */
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #551d1b;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar {
+    background-color: #551d1b;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.8rem; /* Increase font size */
+    color: white;
+}
+
+.navbar-dark .navbar-toggler {
+    border-color: white;
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-color: white;
+}
+
+.navbar-nav {
+    margin-right: 20px;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.2rem; /* Increase font size */
+    color: white;
+    transition: 0.3s;
+}
+
+.about-section {
+    background-color: #551d1b;
+    color: #fff;
+    padding: 20px 0; /* Increase padding */
+    margin-top: 0;
+}
+
+.about-section p {
+    font-size: 1.4rem; /* Increase font size */
+}
+
+/* ... (rest of your code) */
+
+
+.carousel-inner {
+    height: 100vh;
+    margin-top: 0;
+}
+
+.carousel-item {
+    height: 100vh;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    height: 100%;
+}
+
+.carousel-caption {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel-caption p {
+    margin-bottom: 0;
+}

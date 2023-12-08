@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Admin;
-use App\Models\User; 
 use App\Models\Transaction;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator; 
 use App\Models\Product;
 use App\Models\Queue;
+use App\Models\Table;
+use App\Models\User;
 
 
 class AdminController extends Controller
 {    
-    public function admindashboard()
+    public function adminDashboard()
     {
         // You can add any additional logic or data retrieval here
         $data = [
@@ -22,11 +20,27 @@ class AdminController extends Controller
             'welcomeMessage' => 'Welcome to the Admin Dashboard!',
             // Add more data as needed
         ];
-
-        return view('admin.admin-dashboard');
+        return view('admin.admin-dashboard', $data); 
     }
 
-    public function adminpost(Request $request)
+    public function getNewUsers()
+    {
+        $newUsers = User::getNewUsers();
+        return view('admin.new_users', compact('newUsers'));
+    }
+
+
+
+    
+    // Inside your controller
+    public function adminNewUsers()
+    {
+        return view('admin.new_users');
+    }
+
+
+
+    public function adminPost(Request $request)
     {
         // Process the data from the POST request
         // You can add your logic for handling form submissions, updating data, etc.
@@ -36,36 +50,61 @@ class AdminController extends Controller
         return redirect()->route('admin.admin.dashboard');
     }
 
-    public function laludBranch()
+    public function laludBranch(Request $request)
     {
-        return view('admin.laludBranch');
+        // Retrieve the selected timeframe from the request
+        $timeframe = $request->input('timeframe', 'daily'); // Default to daily if not specified
+
+        // Retrieve transactions based on the selected timeframe
+        $transactions = $this->getTransactionsByTimeframe($timeframe);
+
+        // Pass the transactions, timeframe, and a flag indicating the selected timeframe to the view
+        return view('admin.laludBranch', compact('transactions', 'timeframe'));
     }
 
-    public function laludBranchWithData()
+    private function getTransactionsByTimeframe($timeframe)
     {
-        // Retrieve daily transactions
-        $dailyTransactions = Transaction::whereDate('transaction_date', '>=', now()->subDays(5))->get();
-    
-        // Check if there are any daily transactions
-        if ($dailyTransactions->isEmpty()) {
-            // If there are no transactions, you might want to handle this case.
-            // For now, you can set $dailyTransactions to an empty array.
-            $dailyTransactions = [];
+        $startDate = now()->subDays(5); // Default to the last 5 days
+
+        if ($timeframe === 'monthly') {
+            $startDate = now()->subMonths(5);
+        } elseif ($timeframe === 'yearly') {
+            $startDate = now()->subYears(5);
         }
-    
-        // Retrieve monthly and yearly transactions
-        $monthlyTransactions = Transaction::whereDate('transaction_date', '>=', now()->subMonths(5))->get();
-        $yearlyTransactions = Transaction::whereDate('transaction_date', '>=', now()->subYears(5))->get();
-    
-        // Pass the transactions to the view
-        return view('admin.laludBranch', compact('dailyTransactions', 'monthlyTransactions', 'yearlyTransactions'));
+
+        return Transaction::whereDate('transaction_date', '>=', $startDate)
+            ->where(function ($query) {
+                $query->whereDate('transaction_date', '!=', '0000-00-00') // or another invalid date
+                    ->orWhereNull('transaction_date');
+            })
+            ->get();
     }
-    
 
 
-    public function NacocoBranch()
+
+
+    public function addTransaction(Request $request)
     {
-        return view('admin.NacocoBranch');
+        // Validate the request data (adjust rules as needed)
+        $request->validate([
+            'amount' => 'required|numeric',
+            'description' => 'required|string',
+            'transaction_date' => 'required|date',
+        ]);
+
+        // Create a new transaction
+        Transaction::create($request->all());
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Transaction added successfully.');
+    }
+
+
+
+
+    public function nacocoBranch()
+    {
+        return view('admin.nacocoBranch');
     }
 
     public function nacocoBranchWithData()
@@ -86,10 +125,9 @@ class AdminController extends Controller
         // You can customize this view or redirect logic based on your requirements
         return view('admin.show-product', compact('product'));
     }
-    
 
     
-
+    
     /*public function queue()
     {
         // Fetch dynamic queue data (replace with your actual logic)
@@ -97,34 +135,4 @@ class AdminController extends Controller
 
         return view('admin.queue', compact('queue'));
     }*/
-
-
-
 }    
-
-
-
-    /*public function showAdmins()
-    {
-        $firstAdmin = User::first();
-        $allAdmins = User::all();
-
-        if ($firstAdmin) {
-            return view('admin.admin-dashboard', compact('firstAdmin', 'allAdmins'));
-        } else {
-            // Handle the case where $firstAdmin is null, perhaps by redirecting or displaying an error
-            return redirect()->route('admin.dashboard')->with('error', 'No admin found.');
-        }
-        return view('admin.admin-dashboard', compact('firstAdmin', 'allAdmins'));
-    }*/
-
-    /*public function logout()
-    {
-        Auth::logout();
-
-        return redirect()->route('login');
-    }*/
-
-
-
-

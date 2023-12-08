@@ -14,4 +14,9 @@ class MenuItem extends Model
         'price',
         // Add other fields as needed
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

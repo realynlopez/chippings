@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Queue extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'customer_name',
+        'customer_name', // Add any other fillable attributes here
         'status',
-        // Add other fields here if needed
+        'user_id',
     ];
 }

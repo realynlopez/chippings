@@ -15,21 +15,51 @@
 @endsection
 
 @section('branch')
+
     <div class="container mt-4">
         <div class="branch">
             <h1>Welcome to Lalud Branch</h1>
+            <!-- Daily Button -->
+            <a href="{{ route('laludBranch', ['timeframe' => 'daily']) }}" class="btn btn-primary">Daily</a>
+            <!-- Monthly Button -->
+            <a href="{{ route('laludBranch', ['timeframe' => 'monthly']) }}" class="btn btn-primary">Monthly</a>
+            <!-- Yearly Button -->
+            <a href="{{ route('laludBranch', ['timeframe' => 'yearly']) }}" class="btn btn-primary">Yearly</a>  
+
         </div>
     </div>
 
     <div class="container mt-4">
-        <h2>Daily Transactions</h2>
-        <!-- Links to Lalud Branch routes -->
-        <a href="{{ route('laludBranchWithData') }}" class="btn btn-primary">Link to Lalud Branch with Data</a>
-        <a href="{{ route('laludBranch') }}" class="btn btn-secondary">Link to Lalud Branch without Data</a>
+
+        <!-- Display success message if any -->
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        <!-- Display the form to add a transaction -->
+        <div class="mt-4">
+            <h3>Add Transaction</h3>
+            <form action="{{ route('admin.addTransaction') }}" method="post">
+                @csrf
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="amount" name="amount" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="description" name="description" required>
+                </div>
+                <div class="mb-3">
+                    <label for="transaction_date" class="form-label">Transaction Date</label>
+                    <input type="date" class="form-control" id="transaction_date" name="transaction_date" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Transaction</button>
+            </form>
+        </div>
 
         <!-- Display daily transactions if available -->
-        @if(isset($dailyTransactions) && count($dailyTransactions) > 0)
-            <p class="text-center">Number of Daily Transactions: {{ count($dailyTransactions) }}</p>
+            @if(isset($transactions) && count($transactions) > 0)
+            <p class="text-center">Number of Transactions: {{ count($transactions) }}</p>
             <table class="table">
                 <thead>
                     <tr>
@@ -39,26 +69,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($dailyTransactions as $transaction)
+                    @foreach($transactions as $transaction)
                         <tr>
                             <td>{{ $transaction->amount }}</td>
                             <td>{{ $transaction->description }}</td>
-                            <td>
-                                @if(is_string($transaction->transaction_date))
-                                    {{ $transaction->transaction_date }}
-                                @elseif(is_a($transaction->transaction_date, 'Illuminate\Support\Carbon'))
-                                    {{ $transaction->transaction_date->format('Y-m-d') }}
-                                @else
-                                    <!-- Handle other cases if needed -->
-                                    {{ $transaction->transaction_date }}
-                                @endif
-                            </td>
+                            <td>{{ $transaction->transaction_date->format('Y-m-d') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         @else
-            <p>No Daily Transactions</p>
+            <p>No Transactions</p>
         @endif
+
     </div>
 @endsection

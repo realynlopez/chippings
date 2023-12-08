@@ -15,5 +15,9 @@ class Product extends Model
         // You can customize this view or redirect logic based on your requirements
         return view('admin.show-product', compact('product'));
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
 

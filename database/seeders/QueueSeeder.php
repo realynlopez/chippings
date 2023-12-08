@@ -2,22 +2,18 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Queue;
 
 class QueueSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run()
     {
-        // Seed some initial data
-        DB::table('queues')->insert([
-            ['customer_name' => 'John Doe', 'status' => 'Waiting'],
-            ['customer_name' => 'Jane Smith', 'status' => 'In Progress'],
-            // Add more seed data as needed
+        Queue::factory()->create([
+            'user_id' => 1, // Replace with a valid user ID
+            'customer_name' => 'Reaeaqwe',
+            'status' => 'Waiting',
         ]);
     }
 }
+

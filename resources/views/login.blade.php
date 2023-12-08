@@ -60,17 +60,15 @@
             <label for="role" class="form-label">Choose User</label>
             <select class="form-select" name="role" id="role">
                 <option disabled selected>Option</option>
-                <option value="Admin">Admin</option>
-                <option value="Cashier">Cashier</option>
-                <option value="Kitchen">Kitchen</option>
-                <option value="Rider">Rider</option>
-                <option value="Customer">Customer</option>
+                <option value="1">Admin</option>
+                <option value="2">Customer</option>
             </select>
         </div>
         <br>
         <div class="mb-1">
             <a href="#">Forget Your Password?</a>
         </div>
+        <span>Did not have an account? <a href="{{ route('registration') }}">Sign up</a></span>
         <div class="mb-5">
             <button class="btn btn-primary btn-lg" type="submit">Sign In</button>
         </div>

@@ -1,13 +1,10 @@
-<?php 
-
-// app/Http/Controllers/MenuController.php
-
-// app/Http/Controllers/MenuController.php
+<?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MenuItem;
+use Illuminate\Support\Facades\Validator;
 
 class MenuController extends Controller
 {
@@ -25,11 +22,15 @@ class MenuController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             // Add other validation rules as needed
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
 
         MenuItem::create($request->all());
 
@@ -58,5 +59,16 @@ class MenuController extends Controller
     }
 
     
-}
 
+    // MenuController.php
+
+    public function destroy($id)
+    {
+        $menuItem = MenuItem::findOrFail($id);
+        $menuItem->delete();
+
+        return redirect()->route('admin.menu.index')->with('success', 'Menu item deleted successfully!');
+    }
+
+
+}

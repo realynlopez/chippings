@@ -3,22 +3,17 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthManager;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QueueController;
-
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\AdminTableController;
 
 // Default route for all users
 Route::get('/', function () {
-    return redirect()->route('dashboard');
-})->name('home');
-
-// Common dashboard route for all users
-Route::get('/dashboard', function () {
-    // Customize this route for your common dashboard view
-    return view('dashboard');
-})->name('dashboard');
+    return view('homepage');
+})->name('homepage');
 
 // Authentication routes
 Route::get('/login', [AuthManager::class, 'login'])->name('login');
@@ -27,65 +22,68 @@ Route::get('/registration', [AuthManager::class, 'registration'])->name('registr
 Route::post('/registration', [AuthManager::class, 'registrationpost'])->name('registration.post');
 Route::get('/logout', [AuthManager::class, 'logout'])->name('logout');
 
-Route::get('/admin', [AdminController::class, 'admindashboard'])->name('admin.admin-dashboard');
-Route::post('/admin', [AdminController::class, 'adminpost'])->name('admin.post');
-
-//branches
-Route::get('/laludBranch', [AdminController::class, 'laludBranch'])->name('laludBranch');
-Route::get('/laludBranchWithData', [AdminController::class, 'laludBranchWithData'])->name('laludBranchWithData');
-
-Route::get('/NacocoBranch', [AdminController::class, 'NacocoBranch'])->name('NacocoBranch');
-Route::get('/nacocoBranchWithData', [AdminController::class, 'nacocoBranchWithData'])->name('NacocoBranchWithData');
-
+// Admin Dashboard
 Route::prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'admindashboard'])->name('admin.admin-dashboard');
 
-    Route::get('/menu', [AdminController::class, 'manageMenu'])->name('admin.menu');
-    Route::get('/menu/{id}', [AdminController::class, 'showProduct'])->name('admin.menu.show');
-    Route::post('/menu/store', [AdminController::class, 'storeProduct'])->name('admin.menu.store');
-    //Route::get('/queue', [AdminController::class, 'queue'])->name('admin.queue');
+    // Branches
+    Route::get('/laludBranch', [AdminController::class, 'laludBranch'])->name('laludBranch');
+    Route::post('/add-transaction', [AdminController::class, 'addTransaction'])->name('admin.addTransaction');
+
+    Route::get('/nacoco-branch', [AdminController::class, 'NacocoBranch'])->name('NacocoBranch');
+    Route::get('/nacoco-branch-with-data', [AdminController::class, 'nacocoBranchWithData'])->name('NacocoBranchWithData');
+    Route::get('/admin/new_users', [AdminController::class, 'adminNewUsers'])->name('admin.new_users');
 
 });
 
-//Queue
+// Queue
 Route::get('/queue', [QueueController::class, 'index'])->name('queue.index');
 Route::post('/queue/add', [QueueController::class, 'addToQueue'])->name('queue.addToQueue');
 Route::post('/queue/serve-next', [QueueController::class, 'serveNextCustomer'])->name('queue.serveNextCustomer');
 
 // Menu
-Route::get('/admin/menu', [MenuController::class, 'index'])->name('admin.menu.index');
-Route::get('/admin/menu/create', [MenuController::class, 'create'])->name('admin.menu.create');
-Route::post('/admin/menu', [MenuController::class, 'store'])->name('admin.menu.store');
-Route::get('/admin/menu/{id}/edit', [MenuController::class, 'edit'])->name('admin.menu.edit');
-Route::put('/admin/menu/{id}', [MenuController::class, 'update'])->name('admin.menu.update');
-Route::get('/admin/menu/{id}', [AdminController::class, 'showProduct'])->name('admin.menu.show');
+Route::group(['prefix' => 'admin/menu', 'as' => 'admin.menu.'], function () {
+    Route::get('/', [MenuController::class, 'index'])->name('index');
+    Route::get('/create', [MenuController::class, 'create'])->name('create');
+    Route::post('/create', [MenuController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [MenuController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [MenuController::class, 'update'])->name('update');
+    Route::delete('/{id}', [MenuController::class, 'destroy'])->name('destroy');
+    Route::post('/admin/menu/create', [MenuController::class, 'store'])->name('admin.menu.store');
+});
+
+//Table
+Route::get('/admin/table-management', [AdminTableController::class, 'showTableManagementForm'])
+->name('admin.table.management');
+// Handle the form submission to add a new table
+Route::post('/admin/add-table', [AdminTableController::class, 'addTable'])
+->name('admin.add.table');
+//occupied table
+Route::post('/admin/mark-occupied/{id}', [AdminTableController::class, 'markTableOccupied'])
+->name('admin.mark.occupied');
+
+
+
+
+// Show available tables
+Route::get('/available-tables', [ReservationController::class, 'showAvailableTables'])->name('available.tables');
+// Reserve a table
+Route::post('/reserve-table', [ReservationController::class, 'reserveTable'])->name('reserve.table');
+// book a table
+Route::get('/book-table', [ReservationController::class, 'showBookingForm'])->name('book.table');
+Route::get('/queue-status', [UserDashboardController::class, 'showQueueStatus'])->name('queue.status');
+// User Dashboard
+Route::get('/userdashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+
+// User feedback routes
+Route::get('/user/feedback', [FeedbackController::class, 'showFeedbackForm'])->name('user.feedback.form');
+Route::post('/submit-feedback', [FeedbackController::class, 'submitFeedback'])->name('submit.feedback');
+
+// Admin feedback route
+Route::get('/admin/feedback', [FeedbackController::class, 'showAdminFeedback'])->name('admin.feedback.index');
 
 
 
 
 
-// Admin routes (temporarily without authentication)
-/*Route::middleware([])->group(function () {
-    Route::get('/admin', [AdminController::class, 'admindashboard'])->name('admin.dashboard');
-});*/
-
-
-// Authenticated routes
-/*Route::middleware(['auth'])->group(function () {
-    // Other authenticated routes go here
-
-    // Cashier routes
-    Route::middleware(['cashier'])->group(function () {
-        Route::get('/cashier', [CashierController::class, 'dashboard'])->name('cashier.dashboard');
-    });
-
-    // Rider routes
-    Route::middleware(['rider'])->group(function () {
-        Route::get('/rider', [RiderController::class, 'dashboard'])->name('rider.dashboard');
-    });
-
-    // Customer routes
-    Route::middleware(['customer'])->group(function () {
-        Route::get('/customer', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
-    });
-});*/
 

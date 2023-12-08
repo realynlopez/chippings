@@ -11,13 +11,10 @@
     <!-- For example, you can link your custom JS file -->
     <script src="{{ asset('assets/js/admin-index.js') }}"></script>
     <script src="{{ asset('assets/js/admin-orders.js') }}"></script>
-    <script src="orders.js"></script>
-    <script src="index.js"></script>
 @endsection
 
 
 @section('content')
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,6 +46,9 @@
         <a class="nav-link" href="{{ route('queue.index') }}">Queue</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.table.management') }}">Table management</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('logout') }}">Logout</a>
     </li>
     </ul>
@@ -57,10 +57,11 @@
         <!-- Sidebar Section -->
         <aside>
             <div class="toggle">
-                <div class="logo">
-                    <img src="assets/images/logo-chippings.jpg">
-                    <h3>Eskinita<span class="danger">by Chippings</span></h3>
-                </div>
+            <div class="logo">
+                <img src="{{ asset('assets/images/logo-chippings.jpg') }}">
+                <h3>Eskinita<span class="danger">by Chippings</span></h3>
+            </div>
+
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
                         close
@@ -70,56 +71,56 @@
             <!--sidebar-->
             <div class="sidebar">
                 
-                <a href="#">
+                <a href="{{ route('admin.new_users') }}">
                     <span class="material-icons-sharp">
                         person_outline
                     </span>
                     <h3>Users</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('admin.menu.index') }}">
                     <span class="material-icons-sharp">
                         receipt_long
                     </span>
-                    <h3>History</h3>
+                    <h3>Menu</h3>
                 </a>
-                <a href="#" class="active">
+                <a href="#" class="#">
                     <span class="material-icons-sharp">
                         insights
                     </span>
-                    <h3>Dashboard</h3>
+                    <h3>Transactions</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('queue.index') }}">
                     <span class="material-icons-sharp">
                         mail_outline
                     </span>
-                    <h3>Tickets</h3>
+                    <h3>Queue</h3>
                     <span class="message-count">27</span>
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">
                         inventory
                     </span>
-                    <h3>Sale List</h3>
+                    <h3>Sales</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('admin.feedback.index') }}">
                     <span class="material-icons-sharp">
                         report_gmailerrorred
                     </span>
-                    <h3>Reports</h3>
+                    <h3>Feedbacks</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('admin.table.management') }}">
                     <span class="material-icons-sharp">
                         settings
                     </span>
-                    <h3>Settings</h3>
+                    <h3>Table management</h3>
                 </a>
                 <a href="#">
                     <span class="material-icons-sharp">
                         add
                     </span>
-                    <h3>New Login</h3>
+                    <h3> Add</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('logout') }}">
                     <span class="material-icons-sharp">
                         logout
                     </span>
@@ -190,22 +191,22 @@
                 <h2>New Users</h2>
                 <div class="user-list">
                     <div class="user">
-                        <img src="assets/images/profile-2.jpg">
+                        <img src="{{ asset('assets/images/profile-2.jpg') }}">
                         <h2>Arem</h2>
                         <p>54 Min Ago</p>
                     </div>
                     <div class="user">
-                        <img src="assets/images/profile-3.jpg">
+                        <img src="{{ asset('assets/images/profile-3.jpg') }}">
                         <h2>Harvey</h2>
                         <p>3 Hours Ago</p>
                     </div>
                     <div class="user">
-                        <img src="assets/images/profile-4.jpg">
+                        <img src="{{ asset('assets/images/profile-4.jpg') }}">
                         <h2>Natalie</h2>
                         <p>6 Hours Ago</p>
                     </div>
                     <div class="user">
-                        <img src="assets/images/plus.png">
+                        <img src="{{ asset('assets/images/plus.png') }}">
                         <h2>More</h2>
                         <p>New User</p>
                     </div>
@@ -258,7 +259,7 @@
                         <small class="text-muted">Admin</small>
                     </div>
                     <div class="profile-photo">
-                        <img src="assets/images/profile-1.jpg">
+                        <img src="{{ asset('assets/images/profile-1.jpg') }}">
                     </div>
                 </div>
 
@@ -267,7 +268,7 @@
 
             <div class="user-profile">
                 <div class="logo">
-                    <img src="assets/images/logo-chippings.jpg">
+                    <img src="{{ asset('assets/images/logo-chippings.jpg') }}">
                     <h2>Eskinita by Chippings</h2>
                     <p>ihaw-ihaw express</p>
                 </div>
@@ -275,7 +276,7 @@
 
             <div class="reminders">
                 <div class="header">
-                    <h2>Reminders</h2>
+                    <h2>Notification</h2>
                     <span class="material-icons-sharp">
                         notifications_none
                     </span>
