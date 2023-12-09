@@ -28,9 +28,6 @@ class AdminController extends Controller
         $newUsers = User::getNewUsers();
         return view('admin.new_users', compact('newUsers'));
     }
-
-
-
     
     // Inside your controller
     public function adminNewUsers()

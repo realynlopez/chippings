@@ -96,7 +96,7 @@
                     <h3>Queue</h3>
                     <span class="message-count">27</span>
                 </a>
-                <a href="#">
+                <a href="{{ route('admin.sales') }}">
                     <span class="material-icons-sharp">
                         inventory
                     </span>

@@ -18,7 +18,7 @@
                         <a class="nav-link" href="{{ route('queue.status')}}">Queue</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.menu.form')}}">Menu</a>
+                        <a class="nav-link" href="{{ route('user.menu.index')}}">Menu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.feedback.form')}}">Feedback</a>
@@ -37,20 +37,31 @@
                     <div class="card-body">
                         <h3 class="mt-4 mb-3 text-center">Available Tables</h3>
                         <ul class="list-group justify-content-center">
+                        @if($availableTables)
                             @forelse ($availableTables as $table)
                                 <li class="list-group-item">Table {{ $table->id }}</li>
                             @empty
                                 <li class="list-group-item">No available tables at the moment.</li>
                             @endforelse
+                        @endif
                         </ul>
 
                         <h3 class="mt-4 text-center">Your Waiting Queue</h3>
                         <ul class="list-group justify-content-center">
+                        @if($userReservations)
                             @forelse ($userReservations as $reservation)
-                                <li class="list-group-item">You are in the waiting queue for Table {{ $reservation->table_id }}</li>
+                                <li class="list-group-item">
+                                    <strong>Reservation ID:</strong> {{ $reservation->id }}<br>
+                                    <strong>Table:</strong> {{ $reservation->table_id }}<br>
+                                    <strong>Status:</strong> {{ $reservation->status }}<br>
+                                    <!-- Add more reservation details as needed -->
+                                </li>
                             @empty
-                                <li class="list-group-item">You don't have any reservations. Make a reservation to join the waiting queue.</li>
+                                <li class="list-group-item">
+                                    You don't have any reservations. Make a reservation to join the waiting queue.
+                                </li>
                             @endforelse
+                        @endif
                         </ul>
                     </div>
                 </div>

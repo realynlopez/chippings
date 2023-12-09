@@ -1,0 +1,13 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #bc8b89;
+    font-family: 'Roboto', sans-serif;
+}
+
+canvas#dailySalesChart {
+    /* Set the desired height and width for your chart */
+    height: 100px;
+    width: 200px;
+}

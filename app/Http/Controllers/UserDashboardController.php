@@ -11,21 +11,19 @@ class UserDashboardController extends Controller
 {
     public function index()
     {
-        // Check if the user is authenticated
-        if (auth()->check()) {
-            // Fetch available tables
-            $availableTables = Table::whereDoesntHave('reservations')->get();
+        // Fetch available tables
+        $availableTables = Table::whereDoesntHave('reservations')->get();
 
-            // Fetch user's reservations for waiting queue information
-            $userReservations = Reservation::where('user_id', auth()->user()->id)->get();
+        // Commenting out the authentication check for testing purposes
+        // Fetch user's reservations for waiting queue information
+        // $userReservations = auth()->check() ? Reservation::where('user_id', auth()->user()->id)->get() : null;
+        $userReservations = null; // Set $userReservations to null for testing
 
-            return view('user.dashboard', compact('availableTables', 'userReservations'));
-        } else {
-            // Redirect to the login page or handle the case where the user is not authenticated
-            return redirect()->route('login');
-        }
+        return view('user.dashboard', [
+            'availableTables' => $availableTables,
+            'userReservations' => $userReservations,
+        ]);
     }
-
     public function showQueueStatus()
     {
         // Retrieve queue information

@@ -16,11 +16,12 @@ class ReservationController extends Controller
     public function showAvailableTables()
     {
         $tables = Table::whereDoesntHave('reservations', function ($query) {
-            // Check for available tables
+            // Check for available tables based on reservations
         })->get();
 
         return view('reservation.available_tables', compact('tables'));
     }
+
 
 
     

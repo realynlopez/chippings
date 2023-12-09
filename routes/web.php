@@ -9,6 +9,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\AdminTableController;
+use App\Http\Controllers\SalesController;
 
 // Default route for all users
 Route::get('/', function () {
@@ -22,7 +23,7 @@ Route::get('/registration', [AuthManager::class, 'registration'])->name('registr
 Route::post('/registration', [AuthManager::class, 'registrationpost'])->name('registration.post');
 Route::get('/logout', [AuthManager::class, 'logout'])->name('logout');
 
-// Admin Dashboard
+// Admin 
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'admindashboard'])->name('admin.admin-dashboard');
 
@@ -36,12 +37,17 @@ Route::prefix('admin')->group(function () {
 
 });
 
-// Queue
+
+//sales admin
+Route::get('/sales', [SalesController::class, 'index'])->name('admin.sales');
+
+
+// Queue Admin
 Route::get('/queue', [QueueController::class, 'index'])->name('queue.index');
 Route::post('/queue/add', [QueueController::class, 'addToQueue'])->name('queue.addToQueue');
 Route::post('/queue/serve-next', [QueueController::class, 'serveNextCustomer'])->name('queue.serveNextCustomer');
 
-// Menu
+// Menu Admin
 Route::group(['prefix' => 'admin/menu', 'as' => 'admin.menu.'], function () {
     Route::get('/', [MenuController::class, 'index'])->name('index');
     Route::get('/create', [MenuController::class, 'create'])->name('create');
@@ -50,6 +56,14 @@ Route::group(['prefix' => 'admin/menu', 'as' => 'admin.menu.'], function () {
     Route::put('/{id}', [MenuController::class, 'update'])->name('update');
     Route::delete('/{id}', [MenuController::class, 'destroy'])->name('destroy');
     Route::post('/admin/menu/create', [MenuController::class, 'store'])->name('admin.menu.store');
+});
+
+
+//menu_user 
+Route::group(['prefix' => 'user/menu', 'as' => 'user.menu.'], function () {
+    Route::get('/', [MenuController::class, 'userIndex'])->name('index');
+    Route::get('/{id}', [MenuController::class, 'userShow'])->name('show');
+    // Add more user-specific routes as needed
 });
 
 //Table

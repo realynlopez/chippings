@@ -34,13 +34,18 @@ class User extends Authenticatable
 
     public static function getNewUsers()
     {
-        return self::where('created_at', '>=', \Carbon\Carbon::now()->subWeek())->get();
+        return self::where('created_at', '>=', now()->subDays(7))->get();
     }
 
     public function products()
     {
         return $this->hasMany(Product::class);
     }
-    
+
+    public function isAdmin()
+    {
+        return $this->admin; // Assuming 'admin' is a column in your users table
+    }
+
 
 }

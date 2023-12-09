@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Validator;
 
 class MenuController extends Controller
 {
+    public function __construct()
+    {
+        // Apply the 'admin' middleware to the specified methods
+        $this->middleware('admin')->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     public function index()
     {
         $menuItems = MenuItem::all();
@@ -58,10 +64,6 @@ class MenuController extends Controller
         return redirect()->route('admin.menu.index')->with('success', 'Menu item updated successfully!');
     }
 
-    
-
-    // MenuController.php
-
     public function destroy($id)
     {
         $menuItem = MenuItem::findOrFail($id);
@@ -70,5 +72,22 @@ class MenuController extends Controller
         return redirect()->route('admin.menu.index')->with('success', 'Menu item deleted successfully!');
     }
 
+    // Menu COntroller FOr user
+
+    public function userIndex()
+    {
+        $menuItems = MenuItem::all();
+
+        return view('user.menu', compact('menuItems'));
+    }
+
+    public function userShow($id)
+    {
+        $menuItem = MenuItem::findOrFail($id);
+
+        return view('user.menu', compact('menuItem'));
+    }
 
 }
+
+
