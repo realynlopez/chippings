@@ -27,9 +27,7 @@
                         <option value="{{ $table->id }}">{{ $table->name }}</option>
                     @endforeach
                 </select>
-
-
-
+            </div>
             <button type="submit" class="btn btn-primary">Book Table</button>
         </form>
     </div>

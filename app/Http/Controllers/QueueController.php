@@ -2,74 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Queue;
-use App\Events\QueueUpdated;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class QueueController extends Controller
 {
-    public function index()
-    {
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-
-        if ($user && $user->hasRole('admin')) {
-            $queue = Queue::all();
-        } elseif ($user) {
-            $queue = Queue::where('user_id', $user->id)->get();
-        } else {
-            // Handle the case where $user is null
-            // For example, provide an empty queue as the default value
-            $queue = collect();
-        }
-
-        return view('queue')->with('queue', $queue);
-    }
-
-
     public function addToQueue(Request $request)
     {
-        // Validation
-        $this->validate($request, [
+        $request->validate([
             'customer_name' => 'required|string|max:255',
         ]);
 
-        // Get user ID
-        $userId = auth()->id();
-
-        // Create a new queue entry
         $queue = Queue::create([
             'customer_name' => $request->input('customer_name'),
-            'status' => 'Waiting',
-            'user_id' => $userId,
+            'status' => 'waiting',
         ]);
 
-        // Fetch the updated queue (you might need to adjust this based on your application's logic)
-        $updatedQueue = Queue::all();
+        return redirect()->route('queue')->with('success', 'Customer added to the queue successfully.');
+    }
 
-        // Broadcast the event
-        event(new QueueUpdated($updatedQueue));
-
-        return redirect()->route('queue.index')->with('success', 'Customer added to the queue successfully!');
+    public function showQueue()
+    {
+        $queue = Queue::orderBy('created_at')->get();
+        return view('queue', compact('queue'));
     }
 
     public function serveNextCustomer()
     {
-        // Find the next customer in the queue with 'Waiting' status
-        $nextCustomer = Queue::where('status', 'Waiting')->first();
+        $nextCustomer = Queue::where('status', 'waiting')->orderBy('created_at')->first();
 
         if ($nextCustomer) {
-            // Update the status to 'Serving' first
-            $nextCustomer->update(['status' => 'Serving']);
-            
-            // Simulate the serving process (you can add actual serving logic here)
-
-            // Update the status to 'Served' after serving
-            $nextCustomer->update(['status' => 'Served']);
+            $nextCustomer->update(['status' => 'serving']);
+            return redirect()->route('queue')->with('success', 'Next customer is now being served.');
         }
 
-        return redirect()->route('queue.index');
+        return redirect()->route('queue')->with('info', 'No customers in the waiting queue.');
     }
-
 }

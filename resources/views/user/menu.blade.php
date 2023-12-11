@@ -10,31 +10,40 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Welcome to our restaurant</h1>
-        <h2>Menu</h2>
-
+        <h1 class="text-center mt-4 mb-3">Chippings Menu</h1>
+        
+        <h2>Cart</h2>
+        <div id="cart"></div>
+        
         <div class="card mb-3">
             <div class="card-body">
-                <h3 class="card-title">Item 1</h3>
-                <p class="card-text">Description of item 1</p>
-                <p class="card-text">Price: $10</p>
+                <h3 class="card-title">Lechong Manok</h3>
+                <p class="card-text">Best Seller</p>
+                <p class="card-text">Price: 300</p>
                 <a href="#" class="btn btn-primary">Add to cart</a>
             </div>
         </div>
 
         <div class="card mb-3">
             <div class="card-body">
-                <h3 class="card-title">Item 2</h3>
-                <p class="card-text">Description of item 2</p>
-                <p class="card-text">Price: $15</p>
+                <h3 class="card-title">Iniaw Boneless Bangus</h3>
+                <p class="card-text">Best Seller</p>
+                <p class="card-text">Price: 235</p>
+                <a href="#" class="btn btn-primary">Add to cart</a>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3 class="card-title">Liempo</h3>
+                <p class="card-text">Best Seller</p>
+                <p class="card-text">Price: 230</p>
                 <a href="#" class="btn btn-primary">Add to cart</a>
             </div>
         </div>
 
         <!-- Add more menu items here -->
 
-        <h2>Shopping Cart</h2>
-        <div id="cart"></div>
     </div>
 
     <script>

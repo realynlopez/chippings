@@ -10,9 +10,7 @@ use App\Models\Queue;
 
 
 class ReservationController extends Controller
-{
-    // app/Http/Controllers/ReservationController.php
-
+{    
     public function showAvailableTables()
     {
         $tables = Table::whereDoesntHave('reservations', function ($query) {
@@ -20,29 +18,6 @@ class ReservationController extends Controller
         })->get();
 
         return view('reservation.available_tables', compact('tables'));
-    }
-
-
-
-    
-    public function reserveTable(Request $request)
-    {
-        // Validate the request
-        $request->validate([
-            'reservation_date_time' => 'required|date',
-            'number_of_guests' => 'required|integer|min:1',
-            'table_id' => 'required', // Add validation for the table_id
-        ]);
-
-        // Create a reservation
-        Reservation::create([
-            'user_id' => auth()->user()->id,
-            'table_id' => $request->input('table_id'),
-            'reservation_date_time' => $request->input('reservation_date_time'),
-            'number_of_guests' => $request->input('number_of_guests'),
-        ]);
-
-        return redirect()->route('user.dashboard')->with('success', 'Table reserved successfully!');
     }
 
 
@@ -79,15 +54,40 @@ class ReservationController extends Controller
         $numberOfGuests = 2;
 
         // Retrieve all tables
-        $allTables = Table::all();
+        $availableTables = Table::available()->get();
 
         // Filter available tables using isAvailable method
-        $availableTables = $allTables->filter(function ($table) use ($dateTime, $numberOfGuests) {
+        $availableTables = $availableTables->filter(function ($table) use ($dateTime, $numberOfGuests) {
             return $table->isAvailable($dateTime, $numberOfGuests);
         });
 
         return view('reservation.book_table', compact('availableTables'));
     }
 
+    public function reserveTable(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'reservation_date_time' => 'required|date',
+            'number_of_guests' => 'required|integer|min:1',
+            'table_id' => 'required|exists:tables,id',
+        ]);
+
+        // Check table availability (optional, depending on your validation logic)
+        $table = Table::find($request->input('table_id'));
+        if (!$table || !$table->isAvailable($request->input('reservation_date_time'), $request->input('number_of_guests'))) {
+            return redirect()->route('book.table')->with('error', 'Selected table is not available for the given date and time.');
+        }
+
+        // Create a reservation
+        Reservation::create([
+            'user_id' => auth()->user()->id,
+            'table_id' => $request->input('table_id'),
+            'reservation_date_time' => $request->input('reservation_date_time'),
+            'number_of_guests' => $request->input('number_of_guests'),
+        ]);
+
+        return redirect()->route('user.dashboard')->with('success', 'Table reserved successfully!');
+    }
 
 }

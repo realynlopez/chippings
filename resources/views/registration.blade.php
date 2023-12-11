@@ -63,9 +63,10 @@
         <div class="mb-1">
             <label for="role_id" class="form-label">Choose User</label>
             <select class="form-select" name="role_id" id="role_id">
-                <option disabled selected>Option</option>
-                <option value="1">Admin</option>
-                <option value="2">Customer</option>
+                <option disabled selected>Choose a role</option>
+                @foreach($roles as $role)
+                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                @endforeach
             </select>
         </div>
 

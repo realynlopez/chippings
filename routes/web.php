@@ -39,12 +39,12 @@ Route::prefix('admin')->group(function () {
 
 
 //sales admin
-Route::get('/sales', [SalesController::class, 'index'])->name('admin.sales');
+Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
 
 
 // Queue Admin
-Route::get('/queue', [QueueController::class, 'index'])->name('queue.index');
-Route::post('/queue/add', [QueueController::class, 'addToQueue'])->name('queue.addToQueue');
+Route::get('/queue', [QueueController::class, 'showQueue'])->name('queue');
+Route::post('/add-to-queue', [QueueController::class, 'addToQueue'])->name('add.to.queue');
 Route::post('/queue/serve-next', [QueueController::class, 'serveNextCustomer'])->name('queue.serveNextCustomer');
 
 // Menu Admin

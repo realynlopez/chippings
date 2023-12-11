@@ -5,23 +5,19 @@
 @section('content')
     <div class="container">
         <h2>Available Tables</h2>
-            @foreach ($tables as $table)
-                <div>
-                    <p>Table {{ $table->id }}</p>
-                    <form action="{{ route('join.queue') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="table_id" value="{{ $table->id }}">
-                        <button type="submit">Join Queue</button>
-                    </form>
-                </div>
-            @endforeach
-        @if($tables->isEmpty())
+        @if ($tables->isEmpty())
             <p>No available tables at the moment.</p>
         @else
             <ul>
                 @foreach ($tables as $table)
                     <li>
-                        Table {{ $table->id }}
+                        <p>Table {{ $table->id }}</p>
+                        <form action="{{ route('join.queue') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="table_id" value="{{ $table->id }}">
+                            <button type="submit">Join Queue</button>
+                        </form>
+
                         <form action="{{ route('reserve.table') }}" method="post">
                             @csrf
                             <input type="hidden" name="table_id" value="{{ $table->id }}">

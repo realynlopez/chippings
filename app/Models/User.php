@@ -9,14 +9,12 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    // In the User model
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role_id',
+        'role_id', // Assuming you have a 'role_id' column in your users table
     ];
-
 
     protected $hidden = [
         'password',
@@ -44,8 +42,12 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->admin; // Assuming 'admin' is a column in your users table
+        // Assuming 'admin' is a column in your roles table
+        return $this->role && is_object($this->role) && $this->role->name === 'admin';
     }
 
-
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }

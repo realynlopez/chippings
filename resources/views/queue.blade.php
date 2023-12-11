@@ -1,8 +1,8 @@
 @extends('admin.admin-layout')
 
 @section('content')
-    <div class="container mt-4">
-        <h1>Queue Management</h1>
+    <div class="container justify-content-center">
+        <h1 class="text-center mt-4 mb-3">Queue Management</h1>
 
         <!-- Display Flash Messages with Bootstrap Styling -->
         @if(session('success'))
@@ -27,18 +27,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($queue as $index => $customer)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $customer->customer_name }}</td>
-                        <td>{{ $customer->status }}</td>
-                    </tr>
-                @endforeach
+            @forelse($queue as $index => $customer)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $customer->customer_name }}</td>
+                    <td>{{ $customer->status }}</td>
+                </tr>
+            @empty
+            @endforelse
             </tbody>
         </table>
 
         <!-- Form to add a customer to the queue -->
-        <form method="POST" action="{{ route('queue.addToQueue') }}" class="mt-3">
+        <form method="POST" action="{{ route('add.to.queue') }}" class="mt-3">
             @csrf
             <div class="mb-3">
                 <label for="customer_name" class="form-label">Customer Name:</label>

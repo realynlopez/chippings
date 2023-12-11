@@ -1,73 +1,53 @@
-// chart-data.js
+// chart_data.js
 
-var dailySales = [];
-var monthlySales = [];
-var yearlySales = [];
+// This function will be called when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function () {
+    // Get the chart canvas and context
+    var ctx = document.getElementById('myChart').getContext('2d');
 
-// Check if dailySales data is available
-if ('{!! json_encode($dailySales) !!}' !== '') {
-    dailySales = {!! json_encode($dailySales) !!};
-}
-
-// Check if monthlySales data is available
-if ('{!! json_encode($monthlySales) !!}' !== '') {
-    monthlySales = {!! json_encode($monthlySales) !!};
-}
-
-// Check if yearlySales data is available
-if ('{!! json_encode($yearlySales) !!}' !== '') {
-    yearlySales = {!! json_encode($yearlySales) !!};
-}
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-        datasets: [
-            {
-                label: 'Daily Sales',
-                data: dailySales,
-                borderColor: 'rgba(75, 192, 192, 1)',
+    // Initialize the chart with empty data
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Sales',
+                data: [],
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            },
-            {
-                label: 'Monthly Sales',
-                data: monthlySales,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            },
-            {
-                label: 'Yearly Sales',
-                data: yearlySales,
-                borderColor: 'rgba(255, 205, 86, 1)',
-                backgroundColor: 'rgba(255, 205, 86, 0.2)',
-            },
-        ]
-    },
-    options: {
-        scales: {
-            y: {
-                ticks: {
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
                     beginAtZero: true
                 }
             }
         }
-    }
+    });
 
-    window.Laravel = {
-        echo: function (payload) {
-            if (payload.dailySales !== undefined) {
-                dailySales = payload.dailySales;
+    // Function to update the chart with new data
+    window.updateChart = function () {
+        var amount = document.getElementById('amount').value;
+
+        fetch('/chart/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify({ amount: amount }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update chart data
+                myChart.data.labels.push('Sale');
+                myChart.data.datasets[0].data.push(amount);
+                myChart.update();
             }
-    
-            if (payload.monthlySales !== undefined) {
-                monthlySales = payload.monthlySales;
-            }
-    
-            if (payload.yearlySales !== undefined) {
-                yearlySales = payload.yearlySales;
-            }
-        }
+        })
+        .catch(error => console.error('Error:', error));
     };
 });

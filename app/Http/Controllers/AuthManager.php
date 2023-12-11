@@ -48,8 +48,12 @@ class AuthManager extends Controller
             return redirect()->route(self::getDashboardRoute());
         }
 
-        return view('registration');
+        // Fetch roles from the database and pass them to the view
+        $roles = Role::all();
+        
+        return view('registration', ['roles' => $roles]);
     }
+
 
     public function loginPost(Request $request)
     {
@@ -79,26 +83,29 @@ class AuthManager extends Controller
             'password' => 'required',
             'role_id' => 'required|exists:roles,id', // Ensure the selected role_id exists in the roles table
         ]);
-    
-        $data = [
+
+        $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_id' => $request->role_id,
-        ];
-    
-        $user = new User();
-        $user->name = 'Default Name';
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->role_id = $request->input('role_id'); // Make sure the selected role_id exists in the roles table
+        ]);
+
+        // Check if the selected role_id exists in the roles table
+        $roleExists = Role::where('id', $request->role_id)->exists();
+        if (!$roleExists) {
+            return redirect()->route('registration')->with('error', 'Invalid role selected');
+        }
+
         $user->save();
+
         if (!$user) {
             return redirect()->route('registration')->with('error', 'Registration failed, try again');
         }
-    
+
         return redirect()->route('login')->with('success', 'Registration success, Login to access the app');
     }
+
     
 
     public function logout()

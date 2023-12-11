@@ -8,11 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class MenuController extends Controller
 {
-    public function __construct()
-    {
-        // Apply the 'admin' middleware to the specified methods
-        $this->middleware('admin')->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
-    }
+    
 
     public function index()
     {

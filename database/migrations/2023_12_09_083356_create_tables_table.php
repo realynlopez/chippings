@@ -15,6 +15,7 @@ return new class extends Migration
             Schema::create('tables', function (Blueprint $table) {
                 $table->id();
                 $table->string('table_name');
+                $table->string('status'); // Add this line to create a 'status' column
                 $table->timestamps();
             });
         }

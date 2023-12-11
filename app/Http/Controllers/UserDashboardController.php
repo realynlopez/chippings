@@ -33,5 +33,27 @@ class UserDashboardController extends Controller
 
         return view('user.queue_status', compact('queue'));
     }
+
+    public function showBookingForm()
+    {
+        // Get current date and time
+        $dateTime = now();
+
+        // Example number of guests; adjust this based on your requirements
+        $numberOfGuests = 2;
+
+        // Retrieve all tables
+        $availableTables = Table::available()->get();
+
+        // Filter available tables using isAvailable method
+        $availableTables = $availableTables->filter(function ($table) use ($dateTime, $numberOfGuests) {
+            return $table->isAvailable($dateTime, $numberOfGuests);
+        });
+
+        return view('reservation.book_table', compact('availableTables'));
+    }
+
+
+    
 }
 

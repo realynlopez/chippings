@@ -43,7 +43,7 @@
         </ul>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('queue.index') }}">Queue</a>
+        <a class="nav-link" href="{{ route('queue') }}">Queue</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.table.management') }}">Table management</a>
@@ -89,14 +89,14 @@
                     </span>
                     <h3>Transactions</h3>
                 </a>
-                <a href="{{ route('queue.index') }}">
+                <a href="{{ route('queue') }}">
                     <span class="material-icons-sharp">
                         mail_outline
                     </span>
                     <h3>Queue</h3>
                     <span class="message-count">27</span>
                 </a>
-                <a href="{{ route('admin.sales') }}">
+                <a href="{{ route('sales.index') }}">
                     <span class="material-icons-sharp">
                         inventory
                     </span>
@@ -229,7 +229,7 @@
                     </thead>
                     <tbody></tbody>
                 </table>
-                <a href="#">Show All</a>
+                <a href="{{ route('laludBranch') }}">Show All</a>
             </div>
             <!-- End of Recent Orders -->
 

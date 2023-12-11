@@ -34,7 +34,7 @@ class FeedbackController extends Controller
         $feedback->save();
 
         // Redirect back with a success message
-        return redirect()->route('feedback.form')->with('success', 'Feedback submitted successfully!');
+        return redirect()->route('user.feedback.form')->with('success', 'Feedback submitted successfully!');
     }
 
     public function showAdminFeedback()

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Feedback</h1>
+        <h1 class="text-center mt-4 mb-3">Feedback</h1>
 
         <form action="{{ route('submit.feedback') }}" method="post">
             @csrf

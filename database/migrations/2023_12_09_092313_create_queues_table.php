@@ -1,36 +1,23 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateQueuesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    // database/migrations/YYYY_MM_DD_create_queues_table.php
+
     public function up()
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
-            $table->string('queue');
-            $table->longText('payload');
-            $table->unsignedTinyInteger('attempts');
-            $table->unsignedInteger('reserved_at')->nullable();
-            $table->unsignedInteger('available_at');
-            $table->unsignedInteger('created_at');
-
-            $table->index(['queue', 'reserved_at']);
+            $table->string('customer_name');
+            $table->enum('status', ['waiting', 'serving', 'completed'])->default('waiting');
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('queues');
