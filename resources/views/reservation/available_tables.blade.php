@@ -1,35 +1,100 @@
-<!-- resources/views/reservation/available_tables.blade.php -->
+@extends('layout')
 
-@extends('admin.admin-layout')  {{-- Assuming you have a main layout file --}}
+@section('title', 'Eskinita by Chippings | Home Page')
+
+@section('additional_css')
+    <!-- Include additional CSS files for the registration panel here -->
+    <!-- For example, you can link your custom CSS file -->
+    <link href="{{ asset('assets/css/homepage.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
-    <div class="container">
-        <h2>Available Tables</h2>
-        @if ($tables->isEmpty())
-            <p>No available tables at the moment.</p>
-        @else
-            <ul>
-                @foreach ($tables as $table)
-                    <li>
-                        <p>Table {{ $table->id }}</p>
-                        <form action="{{ route('join.queue') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="table_id" value="{{ $table->id }}">
-                            <button type="submit">Join Queue</button>
-                        </form>
+    <body>
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <a class="navbar-brand" href="#">Eskinita by Chippings</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('registration') }}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{ Auth::user()->name }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                        </li>
+                    @endguest
+                </ul>
+            </div>
+        </nav>
 
-                        <form action="{{ route('reserve.table') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="table_id" value="{{ $table->id }}">
-                            <label for="reservation_date_time">Reservation Date and Time:</label>
-                            <input type="datetime-local" name="reservation_date_time" required>
-                            <label for="number_of_guests">Number of Guests:</label>
-                            <input type="number" name="number_of_guests" required>
-                            <button type="submit">Reserve Table</button>
-                        </form>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-    </div>
+        <!-- Slider Section -->
+        <div id="carouselExample" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <!-- Slider Items -->
+                <div class="carousel-item active">
+                    <!-- Slider Image 1 -->
+                    <img src="{{ asset('assets/images/chippings-cover-main.jpg') }}" class="d-block w-100" alt="Slider Image 1">
+                    <div class="carousel-caption d-none d-md-block">
+                        <a href="#home" class="btn btn-outline-dark btn-lg btn-transparent">Home</a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <!-- Slider Image 2 -->
+                    <img src="{{ asset('assets/images/chippings-cover.jpg') }}" class="d-block w-100" alt="Slider Image 2">
+                    <div class="carousel-caption d-none d-md-block">
+                        <a href="#about" class="btn btn-outline-dark btn-lg btn-transparent">About</a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <!-- Slider Image 3 -->
+                    <img src="{{ asset('assets/images/chippings-wbg.jpg') }}" class="d-block w-100" alt="Slider Image 3">
+                    <div class="carousel-caption d-none d-md-block">
+                        <a href="#about" class="btn btn-outline-dark btn-lg btn-transparent">About</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slider Controls -->
+            <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="mt-5 about-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Home content here -->
+                    </div>
+                    <div class="col-md-6">
+                        <!-- About content here -->
+                        <h2>About Us</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                        <p>Vestibulum eu elit sed erat tempus vestibulum...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Bootstrap JS and jQuery (required for Bootstrap features) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </body>
 @endsection
+
