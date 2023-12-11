@@ -47,22 +47,36 @@ class ReservationController extends Controller
    
     public function showBookingForm()
     {
-        // Get current date and time
-        $dateTime = now();
-
-        // Example number of guests; adjust this based on your requirements
-        $numberOfGuests = 2;
-
-        // Retrieve all tables
-        $availableTables = Table::available()->get();
-
-        // Filter available tables using isAvailable method
-        $availableTables = $availableTables->filter(function ($table) use ($dateTime, $numberOfGuests) {
-            return $table->isAvailable($dateTime, $numberOfGuests);
-        });
+        $availableTables = Table::all();
 
         return view('reservation.book_table', compact('availableTables'));
     }
+
+    // ReservationController.php
+    public function storeReservation(Request $request)
+    {
+        // Validate the form data (customize the validation rules based on your requirements)
+        $validatedData = $request->validate([
+            'reservation_date_time' => 'required|date',
+            'number_of_guests' => 'required|integer|min:1',
+            'table_id' => 'required|exists:tables,id',
+            // Add more validation rules as needed
+        ]);
+
+        // Store the reservation in the database
+        $reservation = new Reservation();
+        $reservation->user_id = auth()->user()->id; // Assuming you're using authentication
+        $reservation->table_id = $validatedData['table_id'];
+        $reservation->reservation_date_time = $validatedData['reservation_date_time'];
+        $reservation->number_of_guests = $validatedData['number_of_guests'];
+        // Add more fields as needed
+        $reservation->save();
+
+        // Redirect to the queue status page after successful reservation
+        return redirect()->route('queue.status')->with('success', 'Table reserved successfully!');
+    }
+
+
 
     public function reserveTable(Request $request)
     {
@@ -87,7 +101,11 @@ class ReservationController extends Controller
             'number_of_guests' => $request->input('number_of_guests'),
         ]);
 
-        return redirect()->route('user.dashboard')->with('success', 'Table reserved successfully!');
+       // In your ReservationController.php
+    return redirect()->route('user.dashboard')->with('confirmation', 'Waiting for confirmation.')->with('success', 'Table reserved successfully!');
+
     }
+
+    
 
 }

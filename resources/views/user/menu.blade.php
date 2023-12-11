@@ -1,15 +1,22 @@
+<!-- resources/views/menu.blade.php -->
+
 @extends('layout')
 @section('title', 'Eskinita by Chippings | Menu Page')
+@extends('user.header')
+
+@section('additional_css')
+    <!-- Include additional CSS files for the registration panel here -->
+    <!-- For example, you can link your custom CSS file -->
+    <link href="{{ asset('assets/css/user_header.css') }}" rel="stylesheet">
+    <style>
+        .menu-card-title {
+            font-size: 1.5rem; /* Adjust the font size as needed */
+        }
+    </style>
+@endsection
 
 @section('content')
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Menu</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
+    <div class="container mt-4 mb-3 justify-content-center">
         <h1 class="text-center mt-4 mb-3">Chippings Menu</h1>
         
         <h2>Cart</h2>
@@ -17,7 +24,7 @@
         
         <div class="card mb-3">
             <div class="card-body">
-                <h3 class="card-title">Lechong Manok</h3>
+                <h3 class="menu-card-title">Lechong Manok</h3>
                 <p class="card-text">Best Seller</p>
                 <p class="card-text">Price: 300</p>
                 <a href="#" class="btn btn-primary">Add to cart</a>
@@ -26,7 +33,7 @@
 
         <div class="card mb-3">
             <div class="card-body">
-                <h3 class="card-title">Iniaw Boneless Bangus</h3>
+                <h3 class="menu-card-title">Iniaw Boneless Bangus</h3>
                 <p class="card-text">Best Seller</p>
                 <p class="card-text">Price: 235</p>
                 <a href="#" class="btn btn-primary">Add to cart</a>
@@ -35,7 +42,7 @@
 
         <div class="card mb-3">
             <div class="card-body">
-                <h3 class="card-title">Liempo</h3>
+                <h3 class="menu-card-title">Liempo</h3>
                 <p class="card-text">Best Seller</p>
                 <p class="card-text">Price: 230</p>
                 <a href="#" class="btn btn-primary">Add to cart</a>
@@ -58,12 +65,9 @@
 
         document.querySelectorAll('.btn-primary').forEach(btn => {
             btn.addEventListener('click', () => {
-                let item = btn.parentElement.querySelector('.card-title').innerText;
+                let item = btn.parentElement.querySelector('.menu-card-title').innerText;
                 addToCart(item);
             });
         });
     </script>
-</body>
-</html>
-
 @endsection

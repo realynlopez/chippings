@@ -10,6 +10,8 @@ use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\AdminTableController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\AdminUserController;
+
 
 // Default route for all users
 Route::get('/', function () {
@@ -33,10 +35,10 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/nacoco-branch', [AdminController::class, 'NacocoBranch'])->name('NacocoBranch');
     Route::get('/nacoco-branch-with-data', [AdminController::class, 'nacocoBranchWithData'])->name('NacocoBranchWithData');
-    Route::get('/admin/new_users', [AdminController::class, 'adminNewUsers'])->name('admin.new_users');
 
 });
 
+Route::get('/admin/newly-registered-users', [AdminUserController::class, 'newlyRegisteredUsers'])->name('newlyRegisteredUsers');;
 
 //sales admin
 Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
@@ -66,7 +68,7 @@ Route::group(['prefix' => 'user/menu', 'as' => 'user.menu.'], function () {
     // Add more user-specific routes as needed
 });
 
-//Table
+//Table admin
 Route::get('/admin/table-management', [AdminTableController::class, 'showTableManagementForm'])
 ->name('admin.table.management');
 // Handle the form submission to add a new table

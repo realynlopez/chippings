@@ -30,28 +30,28 @@
     <div class="container d-flex justify-content-center">
     <!--navbar-->
         <ul class="nav nav-pills">
-    <li class="nav-item">
-    <a class="nav-link" href="{{ route('admin.menu.index') }}">Menu</a>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Transactions</a>
-        <ul class="dropdown-menu">
-            <li><hr class="dropdown" href="#">Branches</li>
-            <li><a class="dropdown-item" href="{{ route('laludBranch') }}">Lalud</a></li>
-            <li><a class="dropdown-item" href="{{ route('NacocoBranch') }}">Nacoco</a></li>
-       
+        <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.menu.index') }}">Menu</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Transactions</a>
+            <ul class="dropdown-menu">
+                <li><hr class="dropdown" href="#">Branches</li>
+                <li><a class="dropdown-item" href="{{ route('laludBranch') }}">Lalud</a></li>
+                <li><a class="dropdown-item" href="{{ route('NacocoBranch') }}">Nacoco</a></li>
+        
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('queue') }}">Queue</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.table.management') }}">Table management</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+        </li>
         </ul>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('queue') }}">Queue</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.table.management') }}">Table management</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('logout') }}">Logout</a>
-    </li>
-    </ul>
 
     <div class="container">
         <!-- Sidebar Section -->
@@ -71,7 +71,7 @@
             <!--sidebar-->
             <div class="sidebar">
                 
-                <a href="{{ route('admin.new_users') }}">
+                <a href="{{ route('newlyRegisteredUsers') }}">
                     <span class="material-icons-sharp">
                         person_outline
                     </span>
@@ -254,10 +254,12 @@
                 </div>
 
                 <div class="profile">
-                    <div class="info">
-                        <p>Hey, <b>Rea</b></p>
+                <div class="info">
+                    @if(Auth::check())
+                        <p>Hey, {{ Auth::user()->name }}</b></p>
                         <small class="text-muted">Admin</small>
-                    </div>
+                    @endif
+                </div>
                     <div class="profile-photo">
                         <img src="{{ asset('assets/images/profile-1.jpg') }}">
                     </div>

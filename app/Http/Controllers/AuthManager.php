@@ -14,23 +14,23 @@ class AuthManager extends Controller
     public static function getDashboardRoute()
     {
         $user = Auth::user();
-
+    
         if ($user && is_object($user->role)) {
             switch ($user->role->name) {
-                case 'admin':
+                case 'Admin':
                     return 'admin.admin-dashboard';
-                case 'customer':
+                case 'Customer':
                     return 'user.dashboard';
                 // Add more cases for other roles if needed
                 default:
-                    return 'home';
+                    return 'homepage';   
             }
         }
-
+    
         // Default route if user or role is not defined
-        return 'welcome';
+        return 'homepage'; // Replace 'dashboard.default' with your actual default route
     }
-
+    
 
 
     public function login()
@@ -48,7 +48,7 @@ class AuthManager extends Controller
             return redirect()->route(self::getDashboardRoute());
         }
 
-        // Fetch roles from the database and pass them to the view
+        // Fetch roles from the database and pass cthem to the view
         $roles = Role::all();
         
         return view('registration', ['roles' => $roles]);
@@ -60,8 +60,9 @@ class AuthManager extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'role_id' => 'required|exists:roles,id',
+            'role' => 'required|exists:roles,id',
         ]);
+        
     
         $user = User::where('email', $request->email)->first();
     

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Table; 
+use App\Events\TableUpdated;
 
 class AdminTableController extends Controller
 {
@@ -40,9 +41,14 @@ class AdminTableController extends Controller
         if ($table) {
             $table->status = 'occupied';
             $table->save();
+
+            // Broadcast the table status change
+            broadcast(new TableUpdated($table->id, false)); // Assuming false means the table is not available
+
             return redirect()->route('admin.table.management')->with('success', 'Table marked as occupied successfully!');
         }
 
         return redirect()->route('admin.table.management')->with('error', 'Table not found!');
     }
+
 }
