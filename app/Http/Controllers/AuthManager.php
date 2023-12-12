@@ -26,9 +26,6 @@ class AuthManager extends Controller
                     return 'homepage';   
             }
         }
-    
-        // Default route if user or role is not defined
-        return 'homepage'; // Replace 'dashboard.default' with your actual default route
     }
     
 

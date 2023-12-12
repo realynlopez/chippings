@@ -94,7 +94,7 @@
                         mail_outline
                     </span>
                     <h3>Queue</h3>
-                    <span class="message-count">27</span>
+                    
                 </a>
                 <a href="{{ route('sales.index') }}">
                     <span class="material-icons-sharp">
@@ -170,7 +170,7 @@
                 <div class="searches">
                     <div class="status">
                         <div class="info">
-                            <h3>Searches</h3>
+                            <h3>Sales per Branch</h3>
                             <h1>1,147</h1>
                         </div>
                         <div class="progresss">

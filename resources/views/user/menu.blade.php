@@ -33,7 +33,7 @@
 
         <div class="card mb-3">
             <div class="card-body">
-                <h3 class="menu-card-title">Iniaw Boneless Bangus</h3>
+                <h3 class="menu-card-title">Inihaw Boneless Bangus</h3>
                 <p class="card-text">Best Seller</p>
                 <p class="card-text">Price: 235</p>
                 <a href="#" class="btn btn-primary">Add to cart</a>

@@ -18,7 +18,7 @@
 
     <div class="container mt-4">
         <div class="branch">
-            <h1>Transactions to Lalud Branch</h1>
+            <h1>Transactions to Nacoco Branch</h1>
             <!-- Daily Button -->
             <a href="{{ route('laludBranch', ['timeframe' => 'daily']) }}" class="btn btn-primary">Daily</a>
             <!-- Monthly Button -->

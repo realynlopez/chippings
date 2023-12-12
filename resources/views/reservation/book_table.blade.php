@@ -14,10 +14,15 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="text-center mt-4 mb-3">Book a Table</h2>
+                @if(session('success'))
+                    <div class="alert alert-success">
+                {{ session('success') }}
+                    </div>
+                @endif
 
-                @if(session('confirmation'))
-                    <div class="alert alert-info">
-                        {{ session('confirmation') }}
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
                     </div>
                 @endif
 

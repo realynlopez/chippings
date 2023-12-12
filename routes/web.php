@@ -11,6 +11,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\AdminTableController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\Bagna_blueController;
 
 
 // Default route for all users
@@ -98,8 +99,7 @@ Route::post('/submit-feedback', [FeedbackController::class, 'submitFeedback'])->
 // Admin feedback route
 Route::get('/admin/feedback', [FeedbackController::class, 'showAdminFeedback'])->name('admin.feedback.index');
 
-
-
+Route::get('/admin/bagna_blue', [Bagna_blueController::class, 'index'])->name('admin.bagna_blue');
 
 
 

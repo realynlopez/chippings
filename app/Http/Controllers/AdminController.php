@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Queue;
 use App\Models\Table;
 use App\Models\User;
+use Carbon\Carbon;
 
 
 class AdminController extends Controller
@@ -69,16 +70,21 @@ class AdminController extends Controller
             $startDate = now()->subYears(5);
         }
 
-        return Transaction::whereDate('transaction_date', '>=', $startDate)
+        $transactions = Transaction::whereDate('transaction_date', '>=', $startDate)
             ->where(function ($query) {
                 $query->whereDate('transaction_date', '!=', '0000-00-00') // or another invalid date
                     ->orWhereNull('transaction_date');
             })
             ->get();
+
+        // Ensure transaction_date is cast to Carbon for correct formatting in the view
+        $transactions = $transactions->map(function ($transaction) {
+            $transaction->transaction_date = Carbon::parse($transaction->transaction_date);
+            return $transaction;
+        });
+
+        return $transactions;
     }
-
-
-
 
     public function addTransaction(Request $request)
     {
@@ -98,22 +104,18 @@ class AdminController extends Controller
 
 
 
-
-    public function nacocoBranch()
+    public function nacocoBranch(Request $request)
     {
-        return view('admin.nacocoBranch');
-    }
+        // Retrieve the selected timeframe from the request
+        $timeframe = $request->input('timeframe', 'daily'); // Default to daily if not specified
 
-    public function nacocoBranchWithData()
-    {
-        // Retrieve data for daily, monthly, and yearly transactions
-        $dailyTransactions = Transaction::whereDate('transaction_date', '>=', now()->subDays(5))->get();
-        $monthlyTransactions = Transaction::whereDate('transaction_date', '>=', now()->subMonths(5))->get();
-        $yearlyTransactions = Transaction::whereDate('transaction_date', '>=', now()->subYears(5))->get();
+        // Retrieve transactions based on the selected timeframe
+        $transactions = $this->getTransactionsByTimeframe($timeframe);
 
-        // Pass the data to the view
-        return view('admin.nacocoBranch', compact('dailyTransactions', 'monthlyTransactions', 'yearlyTransactions'));
+        // Pass the transactions, timeframe, and a flag indicating the selected timeframe to the view
+        return view('admin.nacocoBranch', compact('transactions', 'timeframe'));
     }
+    
 
     public function showProduct($id)
     {
