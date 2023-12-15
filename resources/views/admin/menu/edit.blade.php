@@ -1,24 +1,21 @@
 <!-- resources/views/admin/menu/create.blade.php -->
 
-@extends('admin.admin-layout')
+@extends('layout')
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <a href="{{ route('admin.menu.index') }}" class="btn btn-secondary mt-2 mb-3">Back to Menu Management</a>
+        <div class="row justify-content-center mt-5">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Create Menu Item</div>
-
+                    <div class="card-header text-center mt-4 mb-3">Create Menu Item</div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.menu.store') }}" enctype="multipart/form-data">
                             @csrf
-
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Menu Item Name</label>
-
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

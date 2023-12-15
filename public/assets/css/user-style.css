@@ -31,6 +31,25 @@
     --box-shadow: 0 2rem 3rem var(--color-light);
 }
 
+.center-navbar {
+    display: flex;
+    justify-content: center;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: 0;
+    border: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 14px;
+}
+
 body{
     width: 100vw;
     height: 100vh;
@@ -39,36 +58,5 @@ body{
     user-select: none;
     overflow-x: hidden;
     color: var(--color-dark);
-    background-color: #e6c466;
-}
-.navbar {
-    background-color:  #87201A; /* Set your desired background color */
-    transition: background-color 0.3s ease;
-    color: white;
-}
-
-.navbar-light .navbar-nav .nav-link {
-    color: #fff;
-}
-
-.navbar-brand img {
-    max-height: 40px; 
-}
-
-.navbar-nav {
-    margin-left: auto;
-}
-
-.navbar-nav .nav-item {
-    margin-right: 10px;
-}
-
-.navbar-nav .nav-link {
-    text-decoration: none;
-    color: #a19696; /* Set your desired text color */
-    transition: color 0.3s ease;
-}
-
-.navbar-nav .nav-link:hover {
-    color: #007bff; /* Set your desired hover color */
+    background-color: var(--color-background);
 }

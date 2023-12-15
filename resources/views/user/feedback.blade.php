@@ -27,7 +27,7 @@
                         <input type="number" name="rating" id="rating" min="1" max="5" class="form-control" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                    <button type="submit" class="btn btn-primary mt-2">Submit Feedback</button>
                 </form>
             </div>
         </div>

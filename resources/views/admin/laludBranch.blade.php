@@ -1,24 +1,15 @@
 @extends('admin.laludBranch-Layout')
-@extends('admin.header')
+@extends('include.header')
 @section('additional_css')
     <!-- Include additional CSS if needed -->
-    <link rel="stylesheet" href="{{ asset('assets/css/branch.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/branches.css') }}">
+    <link href="{{ asset('assets/css/admin_header.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-@endsection
-
-@section('additional_js')
-    <!-- Include additional JavaScript if needed -->
-    <script src="{{ asset('assets/js/chart1.js') }}"></script>
-    <script src="{{ asset('assets/js/chart2.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.umd.min.js"></script>
 @endsection
 
 @section('branch')
 
     <div class="container mt-4">
-    <a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
-
         <div class="branch">
             <h1>Transactions to Lalud Branch</h1>
             <!-- Daily Button -->

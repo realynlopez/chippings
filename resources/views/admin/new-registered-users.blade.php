@@ -1,12 +1,10 @@
 <!-- resources/views/admin/newly-registered-users.blade.php -->
 
-@extends('layout')
+@extends('admin.admin-layout')
 @section('title', 'New Users | Eskinita By Chippings')
-
+@extends('include.header')
 @section('content')
 <div class="container mt-4 mb-3 justify-content-center">
-<a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
-
         <div class="card">
             <div class="card-body">
                 <h1 class="text-center mt-4 mb-3">New Users</h1>

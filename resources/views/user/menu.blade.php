@@ -1,6 +1,6 @@
 <!-- resources/views/menu.blade.php -->
 
-@extends('layout')
+@extends('admin.admin-layout')
 @section('title', 'Eskinita by Chippings | Menu Page')
 @extends('user.header')
 

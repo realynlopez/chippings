@@ -39,23 +39,31 @@ body{
     user-select: none;
     overflow-x: hidden;
     color: var(--color-dark);
-    background-color: #e6c466;
+    background-color: #ffffff;
 }
 .navbar {
-    background-color:  #87201A; /* Set your desired background color */
+    background-color:  #ffffff;; /* Set your desired background color */
     transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
 }
 
+/* Add this to your CSS */
+
 .navbar-brand img {
-    max-height: 40px; 
+    max-height: 55px; 
+    border-radius: 50%;
 }
 
 .navbar-nav {
     margin-left: auto;
+    display: flex;
+    align-items: center;
 }
 
 .navbar-nav .nav-item {
     margin-right: 10px;
+    
 }
 
 .navbar-nav .nav-link {
@@ -66,4 +74,8 @@ body{
 
 .navbar-nav .nav-link:hover {
     color: #007bff; /* Set your desired hover color */
+}
+
+.btn-btn-primary {
+    background-color: #87201A;
 }

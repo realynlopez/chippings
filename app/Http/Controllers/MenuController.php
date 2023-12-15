@@ -46,12 +46,11 @@ class MenuController extends Controller
             return redirect()->route('admin.menu.index')->with('success', 'Menu item added successfully!');
         }
 
-    public function edit($id)
-    {
-        $menuItem = MenuItem::findOrFail($id);
-
-        return view('admin.menu.edit', compact('menuItem'));
-    }
+        public function edit(MenuItem $menuItem)
+        {
+            return view('admin.menu.edit', compact('menuItem'));
+        }
+        
         // UPDATE IMAGE NEW //
         public function update(Request $request, $id)
         {

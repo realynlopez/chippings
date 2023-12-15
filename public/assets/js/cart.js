@@ -19,7 +19,7 @@ function addToCart(item) {
         cartItems[item] = 1;
         // Show the added to cart message only once
         const cartMessage = document.createElement('p');
-        cartMessage.textContent = `${item} added to cart`;
+        //cartMessage.textContent = `${item} added to cart`;
         document.getElementById('cart').appendChild(cartMessage);
     }
 
@@ -69,17 +69,8 @@ function updateCartTable() {
             deleteCartItem(item);
         });
 
-        // Add additional actions here, such as updating quantity or other operations
-        // Example: You can add an 'Update' button
-        const updateButton = document.createElement('button');
-        updateButton.textContent = 'Update';
-        updateButton.classList.add('btn', 'btn-warning');
-        updateButton.addEventListener('click', function () {
-            updateCartItem(item);
-        });
-
         actionCell.appendChild(deleteButton);
-        actionCell.appendChild(updateButton);
+        //actionCell.appendChild(updateButton);
 
         row.appendChild(itemNameCell);
         row.appendChild(itemQuantityCell);

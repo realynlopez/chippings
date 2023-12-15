@@ -1,7 +1,7 @@
-@extends('admin.admin-layout')
-
+@extends('layout')
 @section('content')
     <div class="container">
+        <a href="{{ route('admin.menu.index') }}" class="btn btn-secondary mt-2 mb-3">Back to Menu Management</a>
         <div class="row justify-content-center mt-5">
             <div class="col-md-8">
                 <div class="card">
@@ -69,7 +69,7 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary mt-2">
                                         Create Product
                                     </button>
                                 </div>
