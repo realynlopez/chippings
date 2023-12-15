@@ -32,4 +32,18 @@ Orders.forEach(order => {
     document.querySelector('table tbody').appendChild(tr);
 });
 
+    function toggleDropdown() {
+    var dropdownMenu = document.getElementById('transactionsDropdown');
+    dropdownMenu.style.display = (dropdownMenu.style.display === 'block') ? 'none' : 'block';
+}
+
+document.addEventListener('click', function (e) {
+    var dropdown = document.querySelector('.dropdown');
+    var menu = dropdown.querySelector('.dropdown-menu');
+    
+    if (!dropdown.contains(e.target) && menu.style.display === 'block') {
+        menu.style.display = 'none';
+    }
+});
+
 

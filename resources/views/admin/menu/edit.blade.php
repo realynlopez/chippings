@@ -1,27 +1,73 @@
+<!-- resources/views/admin/menu/create.blade.php -->
+
 @extends('admin.admin-layout')
 
 @section('content')
-    <div class="container mt-4">
-        <h1 class="mb-4">Edit Menu Item</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Create Menu Item</div>
 
-        <!-- Form to edit the menu item -->
-        <form method="POST" action="{{ route('admin.menu.update', $menuItem->id) }}">
-            @csrf
-            @method('PUT') <!-- Add this line to specify the HTTP method for updating -->
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('admin.menu.store') }}" enctype="multipart/form-data">
+                            @csrf
 
-            <div class="mb-3">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control" name="name" value="{{ $menuItem->name }}" required>
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Menu Item Name</label>
+
+                                <div class="col-md-6">
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="price" class="col-md-4 col-form-label text-md-right">Menu Item Price</label>
+
+                                <div class="col-md-6">
+                                    <input id="price" type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required autocomplete="price">
+
+                                    @error('price')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="image" class="col-md-4 col-form-label text-md-right">Menu Item Image</label>
+
+                                <div class="col-md-6">
+                                    <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" required autocomplete="image">
+
+                                    @error('image')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- Add other form fields as needed -->
+
+                            <div class="form-group row mb-0">
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        Create Menu Item
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label for="price" class="form-label">Price:</label>
-                <input type="number" class="form-control" name="price" value="{{ $menuItem->price }}" required>
-                
-            </div>
-            <!-- Add other form fields as needed -->
-
-            <button type="submit" class="btn btn-primary">Update Menu Item</button>
-        </form>
+        </div>
     </div>
 @endsection

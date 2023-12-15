@@ -13,7 +13,7 @@
     <div class="container mt-4 mb-3 justify-content-center">
         <div class="card">
             <div class="card-body">
-                <h2 class="text-center mt-4 mb-3">Book a Table</h2>
+                <h2 class="text-center mt-4 mb-3">Book a Tableee</h2>
                 @if(session('success'))
                     <div class="alert alert-success">
                 {{ session('success') }}

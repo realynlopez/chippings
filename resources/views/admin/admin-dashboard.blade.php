@@ -26,33 +26,6 @@
 </head>
 
 <body>
-    <div class="navbar">
-    <div class="container d-flex justify-content-center">
-    <!--navbar-->
-        <ul class="nav nav-pills">
-        <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.menu.index') }}">Menu</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Transactions</a>
-            <ul class="dropdown-menu">
-                <li><hr class="dropdown" href="#">Branches</li>
-                <li><a class="dropdown-item" href="{{ route('laludBranch') }}">Lalud</a></li>
-                <li><a class="dropdown-item" href="{{ route('NacocoBranch') }}">Nacoco</a></li>
-        
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('queue') }}">Queue</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.table.management') }}">Table management</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
-        </li>
-        </ul>
-
     <div class="container">
         <!-- Sidebar Section -->
         <aside>
@@ -83,12 +56,19 @@
                     </span>
                     <h3>Menu</h3>
                 </a>
-                <a href="#" class="#">
-                    <span class="material-icons-sharp">
-                        insights
-                    </span>
-                    <h3>Transactions</h3>
-                </a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle" onclick="toggleDropdown()">
+                        <span class="material-icons-sharp">
+                            insights
+                        </span>
+                        <h3>Transactions</h3>
+                    </a>
+                    <div class="dropdown-menu" id="transactionsDropdown">
+                        <a href="{{ route('laludBranch') }}">Lalud</a>
+                        <a href="{{ route('NacocoBranch') }}">Nacoco</a>
+                    </div>
+                </div>
+                
                 <a href="{{ route('queue') }}">
                     <span class="material-icons-sharp">
                         mail_outline
@@ -206,7 +186,7 @@
                         <p>6 Hours Ago</p>
                     </div>
                     <div class="user">
-                        <img src="{{ asset('assets/images/plus.png') }}">
+                        <img src="{{ asset('assets/images/plus.png') }}" href="{{ route('newlyRegisteredUsers') }}">
                         <h2>More</h2>
                         <p>New User</p>
                     </div>

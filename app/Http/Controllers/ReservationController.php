@@ -76,8 +76,6 @@ class ReservationController extends Controller
         return redirect()->route('queue.status')->with('success', 'Table reserved successfully!');
     }
 
-
-
     public function reserveTable(Request $request)
     {
         // Validate the request
@@ -86,13 +84,13 @@ class ReservationController extends Controller
             'number_of_guests' => 'required|integer|min:1',
             'table_id' => 'required|exists:tables,id',
         ]);
-
-        // Check table availability (optional, depending on your validation logic)
+    
+        // Check table availability
         $table = Table::find($request->input('table_id'));
-        if (!$table || !$table->isAvailable($request->input('reservation_date_time'), $request->input('number_of_guests'))) {
+        if (!$table || !$this->isTableAvailable($table, $request->input('reservation_date_time'), $request->input('number_of_guests'))) {
             return redirect()->route('book.table')->with('error', 'Selected table is not available for the given date and time.');
         }
-
+    
         // Create a reservation
         Reservation::create([
             'user_id' => auth()->user()->id,
@@ -100,12 +98,30 @@ class ReservationController extends Controller
             'reservation_date_time' => $request->input('reservation_date_time'),
             'number_of_guests' => $request->input('number_of_guests'),
         ]);
-
-       // In your ReservationController.php
-    return redirect()->route('user.dashboard')->with('confirmation', 'Waiting for confirmation.')->with('success', 'Table reserved successfully!');
-
-    }
-
     
+        // Redirect to the user dashboard with a success message
+        return redirect()->route('user.dashboard')->with('confirmation', 'Waiting for confirmation.')->with('success', 'Table reserved successfully!');
+    }
+    
+    /**
+     * Check if the table is available for reservation.
+     *
+     * @param \App\Models\Table $table
+     * @param string $reservationDateTime
+     * @param int $numberOfGuests
+     * @return bool
+     */
+    private function isTableAvailable(Table $table, $reservationDateTime, $numberOfGuests)
+    {
+        // Check for existing reservations for the specified date and time
+        $existingReservations = Reservation::where('table_id', $table->id)
+            ->where('reservation_date_time', $reservationDateTime)
+            ->get();
+    
+        // Check if the table can accommodate the requested number of guests
+        $totalGuests = $existingReservations->sum('number_of_guests') + $numberOfGuests;
+    
+        return $totalGuests <= $table->capacity;
+    }
 
 }

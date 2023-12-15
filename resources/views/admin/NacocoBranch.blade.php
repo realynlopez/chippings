@@ -17,6 +17,8 @@
 @section('branch')
 
     <div class="container mt-4">
+    <a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+
         <div class="branch">
             <h1>Transactions to Nacoco Branch</h1>
             <!-- Daily Button -->

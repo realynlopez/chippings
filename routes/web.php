@@ -43,7 +43,7 @@ Route::get('/admin/newly-registered-users', [AdminUserController::class, 'newlyR
 
 //sales admin
 Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
-
+Route::get('/chart/data', [SalesController::class, 'getSalesChartData'])->name('chart.data');
 
 // Queue Admin
 Route::get('/queue', [QueueController::class, 'showQueue'])->name('queue');
@@ -78,6 +78,7 @@ Route::post('/admin/add-table', [AdminTableController::class, 'addTable'])
 //occupied table
 Route::post('/admin/mark-occupied/{id}', [AdminTableController::class, 'markTableOccupied'])
 ->name('admin.mark.occupied');
+Route::delete('/admin/delete/table/{id}', [AdminTableController::class, 'deleteTable'])->name('admin.delete.table');
 
 
 

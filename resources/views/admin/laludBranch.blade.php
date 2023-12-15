@@ -1,5 +1,5 @@
 @extends('admin.laludBranch-Layout')
-
+@extends('admin.header')
 @section('additional_css')
     <!-- Include additional CSS if needed -->
     <link rel="stylesheet" href="{{ asset('assets/css/branch.css') }}">
@@ -17,6 +17,8 @@
 @section('branch')
 
     <div class="container mt-4">
+    <a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+
         <div class="branch">
             <h1>Transactions to Lalud Branch</h1>
             <!-- Daily Button -->

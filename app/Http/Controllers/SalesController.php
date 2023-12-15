@@ -1,8 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+
+use App\Models\Transactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {
@@ -11,12 +15,25 @@ class SalesController extends Controller
         return view('sales.index');
     }
 
-    public function getData(Request $request)
+    public function getSalesChartData()
     {
-        $amount = $request->input('amount');
+        $sales = DB::table('transactions')->get(); // Assuming "transactions" is your table name
 
-        // You can store $amount in the database or perform any other necessary actions.
+        $labels = [];
+        $amounts = [];
+        $descriptions = [];
 
-        return response()->json(['success' => true]);
+        foreach ($sales as $sale) {
+            $labels[] = $sale->id; // Use the appropriate field for the label
+            $amounts[] = $sale->amount; // Use the appropriate field for the amount
+            $descriptions[] = $sale->description; // Use the appropriate field for the description
+        }
+
+        return response()->json([
+            'success' => true,
+            'labels' => $labels,
+            'amounts' => $amounts,
+            'descriptions' => $descriptions,
+        ]);
     }
 }

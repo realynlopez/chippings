@@ -60,6 +60,30 @@ body{
     color: var(--color-dark);
     background-color: var(--color-background);
 }
+    /* Add the CSS styles here */
+    .dropdown 
+    {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-menu 
+    {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        z-index: 1;
+    }
+
+    .dropdown-menu a 
+    {
+        display: block;
+         padding: 8px;
+         text-decoration: none;
+         color: #333;
+    }
 
 a{
     color: var(--color-dark);

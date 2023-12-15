@@ -121,8 +121,16 @@ class AdminController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // You can customize this view or redirect logic based on your requirements
         return view('admin.show-product', compact('product'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $imagePath = $request->file('image')->store('images');
     }
 
     

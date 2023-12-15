@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="container justify-content-center">
+    <a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mt-3 mb-2">Back to Dashboard</a>
+
         <h1 class="text-center mt-4 mb-3">Queue Management</h1>
 
         <!-- Display Flash Messages with Bootstrap Styling -->
@@ -27,14 +29,14 @@
                 </tr>
             </thead>
             <tbody>
-            @forelse($queue as $index => $customer)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $customer->customer_name }}</td>
-                    <td>{{ $customer->status }}</td>
-                </tr>
-            @empty
-            @endforelse
+                @forelse($queue as $index => $customer)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $customer->customer_name }}</td>
+                        <td>{{ $customer->status }}</td>
+                    </tr>
+                @empty
+                @endforelse
             </tbody>
         </table>
 

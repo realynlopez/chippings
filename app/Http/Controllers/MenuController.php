@@ -21,23 +21,30 @@ class MenuController extends Controller
     {
         return view('admin.menu.create');
     }
-
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            // Add other validation rules as needed
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors($validator);
+        public function store(Request $request)
+        {
+            $validator = Validator::make($request->all(), [
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'name' => 'required|string|max:255',
+                'price' => 'required|numeric',
+            ]);
+        
+            if ($validator->fails()) {
+                return redirect()->back()->withInput()->withErrors($validator);
+            }
+        
+            $imagePath = $request->file('image')->store('images', 'public');
+        
+            $menuItem = new MenuItem([
+                'name' => $request->input('name'),
+                'price' => $request->input('price'),
+                'image' => $imagePath,
+            ]);
+        
+            $menuItem->save();
+        
+            return redirect()->route('admin.menu.index')->with('success', 'Menu item added successfully!');
         }
-
-        MenuItem::create($request->all());
-
-        return redirect()->route('admin.menu.index')->with('success', 'Menu item added successfully!');
-    }
 
     public function edit($id)
     {
@@ -45,20 +52,38 @@ class MenuController extends Controller
 
         return view('admin.menu.edit', compact('menuItem'));
     }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            // Add other validation rules as needed
-        ]);
-
-        $menuItem = MenuItem::findOrFail($id);
-        $menuItem->update($request->all());
-
-        return redirect()->route('admin.menu.index')->with('success', 'Menu item updated successfully!');
-    }
+        // UPDATE IMAGE NEW //
+        public function update(Request $request, $id)
+        {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'price' => 'required|numeric',
+            ]);
+        
+            $menuItem = MenuItem::findOrFail($id);
+        
+            if ($request->hasFile('image')) {
+                $validator = Validator::make($request->all(), [
+                    'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                ]);
+        
+                if ($validator->fails()) {
+                    return redirect()->back()->withInput()->withErrors($validator);
+                }
+        
+                $imagePath = $request->file('image')->store('images', 'public');
+        
+                $menuItem->update([
+                    'name' => $request->input('name'),
+                    'price' => $request->input('price'),
+                    'image' => $imagePath,
+                ]);
+            } else {
+                $menuItem->update($request->only(['name', 'price']));
+            }
+        
+            return redirect()->route('admin.menu.index')->with('success', 'Menu item updated successfully!');
+        }
 
     public function destroy($id)
     {
@@ -68,7 +93,7 @@ class MenuController extends Controller
         return redirect()->route('admin.menu.index')->with('success', 'Menu item deleted successfully!');
     }
 
-    // Menu COntroller FOr user
+    // menu controller for user //
 
     public function userIndex()
     {
@@ -84,6 +109,6 @@ class MenuController extends Controller
         return view('user.menu', compact('menuItem'));
     }
 
+    
+
 }
-
-

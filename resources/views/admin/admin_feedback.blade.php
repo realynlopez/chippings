@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container mt-4 mb-3 justify-content-center">
+<a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+
         <div class="card">
             <div class="card-body">
                 <h1 class="text-center mt-4 mb-3">Admin Feedback</h1>

@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Table; 
-use App\Events\TableUpdated;
+use App\Events\TableUpdated; // Add this line
 
 class AdminTableController extends Controller
 {
     public function showTableManagementForm()
     {
-        $tables = Table::all(); // Retrieve all tables from the database
+        $tables = Table::all();
 
         return view('admin.table_management', compact('tables'));
     }
+
 
     public function addTable(Request $request)
     {
@@ -49,6 +50,19 @@ class AdminTableController extends Controller
         }
 
         return redirect()->route('admin.table.management')->with('error', 'Table not found!');
+    }
+
+    public function deleteTable($id)
+    {
+        $table = Table::find($id);
+
+        if (!$table) {
+            return redirect()->route('admin.table.management')->with('error', 'Table not found');
+        }
+
+        $table->delete();
+
+        return redirect()->route('admin.table.management')->with('success', 'Table deleted successfully');
     }
 
 }

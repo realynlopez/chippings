@@ -1,43 +1,69 @@
-/* Add your custom styles here */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-/* Navbar */
+:root{
+    --color-primary: #87201A;
+    --color-danger: #FEBD03;
+    --color-success: #443625;
+    --color-warning: #F7D060;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+.dark-mode-variables{
+    --color-background: #181a1e;
+    --color-white: #202528;
+    --color-dark: #edeffd;
+    --color-dark-variant: #a3bdcc;
+    --color-light: rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    user-select: none;
+    overflow-x: hidden;
+    color: var(--color-dark);
+    background-color: #e6c466;
+}
 .navbar {
-    background-color: #f8f9fa; /* Light background color */
+    background-color:  #87201A; /* Set your desired background color */
+    transition: background-color 0.3s ease;
 }
 
 .navbar-brand img {
-    max-height: 40px; /* Adjust the height of the logo */
+    max-height: 40px; 
+}
+
+.navbar-nav {
+    margin-left: auto;
 }
 
 .navbar-nav .nav-item {
-    margin-right: 10px; /* Adjust the spacing between navbar items */
+    margin-right: 10px;
 }
 
-/* Dropdown menu */
-.dropdown-menu {
-    background-color: #f8f9fa; /* Light background color for the dropdown */
+.navbar-nav .nav-link {
+    text-decoration: none;
+    color: #a19696; /* Set your desired text color */
+    transition: color 0.3s ease;
 }
 
-.dropdown-item {
-    color: #212529; /* Text color for dropdown items */
-}
-
-.dropdown-item:hover {
-    background-color: #e9ecef; /* Background color on hover */
-}
-
-/* Active link */
-.navbar-nav .nav-item.active .nav-link {
-    color: #007bff; /* Active link text color */
-}
-
-/* Responsive navbar */
-@media (max-width: 768px) {
-    .navbar-toggler {
-        background-color: #007bff; /* Background color for the toggle button on small screens */
-    }
-
-    .navbar-toggler-icon {
-        background-color: #fff; /* Color of the hamburger icon on small screens */
-    }
+.navbar-nav .nav-link:hover {
+    color: #007bff; /* Set your desired hover color */
 }

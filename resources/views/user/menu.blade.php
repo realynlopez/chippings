@@ -18,56 +18,37 @@
 @section('content')
     <div class="container mt-4 mb-3 justify-content-center">
         <h1 class="text-center mt-4 mb-3">Chippings Menu</h1>
+
+        <div id="cart">
+            <h3 class="text-center mt-4 mb-3">Cart Items</h3>
+            <table class="table">
+                <tbody id="cart-items-body">
+                    <!-- Cart items will be displayed here -->
+                </tbody>
+            </table>
+        </div>
         
-        <h2>Cart</h2>
-        <div id="cart"></div>
-        
-        <div class="card mb-3">
-            <div class="card-body">
-                <h3 class="menu-card-title">Lechong Manok</h3>
-                <p class="card-text">Best Seller</p>
-                <p class="card-text">Price: 300</p>
-                <a href="#" class="btn btn-primary">Add to cart</a>
+        <h3>Menu</h3>
+
+        @foreach($menuItems as $menuItem)
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3 class="menu-card-title">{{ $menuItem->name }}</h3>
+                    <p class="card-text">{{ $menuItem->description }}</p>
+                    <p class="card-text">Price: {{ $menuItem->price }}</p>
+                    
+                    <!-- Display image if available -->
+                    @if($menuItem->image)
+                        <img src="{{ asset('storage/' . $menuItem->image) }}" alt="{{ $menuItem->name }}" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+                    @else
+                        No Image
+                    @endif
+
+                    <a href="#" class="btn btn-primary" onclick="addToCart('{{ $menuItem->name }}')">Add to cart</a>
+                </div>
             </div>
-        </div>
+        @endforeach
 
-        <div class="card mb-3">
-            <div class="card-body">
-                <h3 class="menu-card-title">Inihaw Boneless Bangus</h3>
-                <p class="card-text">Best Seller</p>
-                <p class="card-text">Price: 235</p>
-                <a href="#" class="btn btn-primary">Add to cart</a>
-            </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="card-body">
-                <h3 class="menu-card-title">Liempo</h3>
-                <p class="card-text">Best Seller</p>
-                <p class="card-text">Price: 230</p>
-                <a href="#" class="btn btn-primary">Add to cart</a>
-            </div>
-        </div>
-
-        <!-- Add more menu items here -->
-
+        <script src="{{ asset('assets/js/cart.js') }}"></script>
     </div>
-
-    <script>
-        // This script will handle adding items to the cart.
-        // You will need to connect this with your backend to handle the actual adding to cart.
-
-        function addToCart(item) {
-            // This will be a server request in a real application.
-            // Here is just a placeholder to show what would happen.
-            document.getElementById('cart').innerHTML += `<p>${item} added to cart</p>`;
-        }
-
-        document.querySelectorAll('.btn-primary').forEach(btn => {
-            btn.addEventListener('click', () => {
-                let item = btn.parentElement.querySelector('.menu-card-title').innerText;
-                addToCart(item);
-            });
-        });
-    </script>
 @endsection

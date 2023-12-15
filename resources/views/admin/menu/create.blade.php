@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-5">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Create Product</div>
+                    <div class="card-header text-center mt-4 mb-3">Create Product</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.menu.store') }}" enctype="multipart/form-data">
