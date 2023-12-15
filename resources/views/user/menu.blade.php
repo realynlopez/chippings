@@ -1,5 +1,3 @@
-<!-- resources/views/menu.blade.php -->
-
 @extends('admin.admin-layout')
 @section('title', 'Eskinita by Chippings | Menu Page')
 @extends('user.header')
@@ -45,6 +43,12 @@
                     @endif
 
                     <a href="#" class="btn btn-primary" onclick="addToCart('{{ $menuItem->name }}')">Add to cart</a>
+                    <div id="cart" data-checkout-route="{{ route('user.menu.user.checkout') }}">
+                        <button class="btn btn-success" onclick="checkout()">Checkout</button>
+                    </div>
+
+                    <!-- Move the meta tag inside the loop -->
+                    <meta name="cart-route" content="{{ route('user.menu.user.addToCart') }}">
                 </div>
             </div>
         @endforeach
@@ -58,4 +62,5 @@
                     console.log(`Item ${event.itemName} added to cart`);
                 });
         </script>
+    </div>
 @endsection

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use App\Events\ItemAddedToCart;
 use Illuminate\Support\Facades\Redis;
+use App\Events\OrderCheckedOut;
+use App\Models\Order;
+use App\Models\CartItem;
 
 class MenuController extends Controller
 {
@@ -119,9 +122,43 @@ class MenuController extends Controller
         // Handle the logic to add the item to the cart (you may have this already)
 
         // Notify the admin about the update (you may use events and listeners here)
-        broadcast(new ItemAddedToCart($request->input('itemName')));
-
         return response()->json(['status' => 'success']);
     }  
 
+   
+   // Example in your controller method where the user checks out
+   public function checkout(Request $request)
+    {
+        // Assume a user is authenticated; you may need to handle authentication
+        $user = auth()->user();
+
+        // Create a new order
+        $order = new Order([
+            'user_id' => $user->id,
+            'shipping_address' => $request->input('shipping_address'),
+            // Add other order details as needed
+        ]);
+        $order->save();
+
+        // Get the user's cart items
+        $cartItems = CartItem::where('user_id', $user->id)->get();
+
+        // Move cart items to the order
+        foreach ($cartItems as $cartItem) {
+            $order->cartItems()->create([
+                'menu_item_id' => $cartItem->menu_item_id,
+                'quantity' => $cartItem->quantity,
+                // Add other cart item details as needed
+            ]);
+            $cartItem->delete();
+        }
+
+        // You may also want to calculate and store the total amount in the order
+
+        // Clear the cart after checkout
+        $user->cartItems()->delete();
+
+        return redirect()->route('user.menu.index')->with('success', 'Checkout successful!');
+    }
+   
 }

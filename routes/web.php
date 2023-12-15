@@ -67,8 +67,8 @@ Route::group(['prefix' => 'user/menu', 'as' => 'user.menu.'], function () {
     Route::get('/', [MenuController::class, 'userIndex'])->name('index');
     Route::get('/{id}', [MenuController::class, 'userShow'])->name('show');
     // routes/web.php or routes/api.php
-    Route::post('/user/addToCart', 'MenuController@addToCart')->name('user.addToCart');
-
+    Route::post('/user/addToCart', [MenuController::class,'addToCart'])->name('user.addToCart');
+    Route::post('/user/checkout', [MenuController::class, 'checkout'])->name('user.menu.user.checkout');
     // Add more user-specific routes as needed
 });
 

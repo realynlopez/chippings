@@ -26,7 +26,7 @@ function addToCart(item) {
     
     $.ajax({
         type: 'POST',
-        url: '{{ route('user.addToCart') }}',
+        url: document.head.querySelector('meta[name="cart-route"]').content, // Get the route dynamically
         data: { itemName: item },
         success: function(response) {
             console.log(response);
@@ -36,6 +36,28 @@ function addToCart(item) {
         }
     });
 }
+
+function checkout() {
+    const checkoutRoute = $('#cart').data('checkout-route');
+
+    // Make an AJAX request to the checkout route
+    $.ajax({
+        type: 'POST',
+        url: checkoutRoute,
+        data: {
+            shipping_address: '123 Main St', // Example, replace with actual shipping address
+        },
+        success: function(response) {
+            console.log(response);
+            // Optionally, update the UI to reflect the successful checkout
+        },
+        error: function(error) {
+            console.error(error);
+            // Handle errors if needed
+        }
+    });
+}
+
 
 function updateCartTable() {
     const cartItemsBody = document.getElementById('cart-items-body');
