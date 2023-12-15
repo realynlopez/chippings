@@ -1,8 +1,5 @@
 // public/js/cart.js
 
-// This script will handle adding items to the cart.
-// You will need to connect this with your backend to handle the actual adding to cart.
-
 const cartItems = {};
 let isAddingToCart = false;
 
@@ -17,10 +14,6 @@ function addToCart(item) {
         cartItems[item]++;
     } else {
         cartItems[item] = 1;
-        // Show the added to cart message only once
-        const cartMessage = document.createElement('p');
-        //cartMessage.textContent = `${item} added to cart`;
-        document.getElementById('cart').appendChild(cartMessage);
     }
 
     // Update the cart table
@@ -30,8 +23,19 @@ function addToCart(item) {
     setTimeout(() => {
         isAddingToCart = false;
     }, 1000); // You can adjust the delay as needed
+    
+    $.ajax({
+        type: 'POST',
+        url: '{{ route('user.addToCart') }}',
+        data: { itemName: item },
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
 }
-
 
 function updateCartTable() {
     const cartItemsBody = document.getElementById('cart-items-body');
@@ -70,7 +74,6 @@ function updateCartTable() {
         });
 
         actionCell.appendChild(deleteButton);
-        //actionCell.appendChild(updateButton);
 
         row.appendChild(itemNameCell);
         row.appendChild(itemQuantityCell);
@@ -90,10 +93,20 @@ function deleteCartItem(item) {
     updateCartTable();
 }
 
-function updateCartItem(item) {
-    // Add your logic for updating the quantity or any other action here
-    // For example, you can prompt the user for a new quantity and update cartItems[item]
-    // Don't forget to call updateCartTable() after the update
-    // ...
-    updateCartTable();
+// Add this function to handle the user interface update when an item is added to the cart
+function displayItemAddedMessage(item) {
+    const cartMessage = document.createElement('p');
+    cartMessage.textContent = `${item} added to cart`;
+    document.getElementById('cart').appendChild(cartMessage);
 }
+
+// ...
+
+// Inside your JavaScript file
+window.Echo.channel('cart-updates')
+    .listen('ItemAddedToCart', (event) => {
+        // Update your user UI here
+        console.log(`Item ${event.itemName} added to cart`);
+        // Call the function to display the added to cart message
+        displayItemAddedMessage(event.itemName);
+    });

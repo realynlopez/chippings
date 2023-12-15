@@ -66,6 +66,9 @@ Route::group(['prefix' => 'admin/menu', 'as' => 'admin.menu.'], function () {
 Route::group(['prefix' => 'user/menu', 'as' => 'user.menu.'], function () {
     Route::get('/', [MenuController::class, 'userIndex'])->name('index');
     Route::get('/{id}', [MenuController::class, 'userShow'])->name('show');
+    // routes/web.php or routes/api.php
+    Route::post('/user/addToCart', 'MenuController@addToCart')->name('user.addToCart');
+
     // Add more user-specific routes as needed
 });
 

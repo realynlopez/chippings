@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MenuItem;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Response;
+use App\Events\ItemAddedToCart;
+use Illuminate\Support\Facades\Redis;
 
 class MenuController extends Controller
 {
@@ -15,6 +18,7 @@ class MenuController extends Controller
         $menuItems = MenuItem::all();
 
         return view('admin.menu.index', compact('menuItems'));
+
     }
 
     public function create()
@@ -108,6 +112,16 @@ class MenuController extends Controller
         return view('user.menu', compact('menuItem'));
     }
 
-    
+    // MenuController.php
+
+    public function addToCart(Request $request)
+    {
+        // Handle the logic to add the item to the cart (you may have this already)
+
+        // Notify the admin about the update (you may use events and listeners here)
+        broadcast(new ItemAddedToCart($request->input('itemName')));
+
+        return response()->json(['status' => 'success']);
+    }  
 
 }

@@ -50,5 +50,12 @@
         @endforeach
 
         <script src="{{ asset('assets/js/cart.js') }}"></script>
-    </div>
+        <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.js"></script>
+        <script>
+            window.Echo.channel('cart-updates')
+                .listen('ItemAddedToCart', (event) => {
+                    // Update your user UI here
+                    console.log(`Item ${event.itemName} added to cart`);
+                });
+        </script>
 @endsection

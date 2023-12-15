@@ -3,8 +3,20 @@
 @extends('admin.admin-layout')
 
 @section('title', 'Menu Management')
+<script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.js"></script>
 
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+    <script>
+        const socket = io('http://127.0.0.1:8000/'); // Change this to your Laravel app URL
+
+        socket.on('admin-channel:App\\Events\\ItemAddedToCart', function(data) {
+            console.log('Item added to cart:', data);
+            // You can update the admin view here to show the new item added to the cart
+            // Example: Update a table or display a notification
+        });
+    </script>
+
     <div class="container mt-4">
         <a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
         <h1 style="text-align: center;">Menu Management</h1>
