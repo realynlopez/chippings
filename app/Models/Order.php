@@ -8,15 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    // app/Models/Order.php
+
+    protected $fillable = [
+        'name',
+        'email',
+        'order_number',
+        'user_id',
+        // Add other fields that are mass assignable
+    ];
 
     public function cartItems()
     {
         return $this->hasMany(CartItem::class);
     }
 
-
-    protected $fillable = ['name', 'email', /* other fields */];
-
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

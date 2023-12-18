@@ -42,27 +42,43 @@ class CheckoutController extends Controller
     }
 
     public function placeOrder(Request $request)
-    {
-        // Validate the incoming request data
-        $request->validate([
-            'user_id' => 'required', // Adjust validation rules as needed
-            'shipping_address' => 'required',
-            // Other order details validation rules
-        ]);
+{
+    // Validate the incoming request data
+    $request->validate([
+        'user_id' => 'required', // Adjust validation rules as needed
+        'shipping_address' => 'required',
+        // Other order details validation rules
+    ]);
 
-        // Get the necessary data from the request
-        $userId = $request->input('user_id');
-        $shippingAddress = $request->input('shipping_address');
+    // Get the necessary data from the request
+    $userId = $request->input('user_id');
+    $shippingAddress = $request->input('shipping_address');
+    // Other order details
+
+    // Create a new order
+    $order = Order::create([
+        'user_id' => $userId,
+        'shipping_address' => $shippingAddress,
         // Other order details
+    ]);
 
-        // Create a new order
-        Order::create([
-            'user_id' => $userId,
-            'shipping_address' => $shippingAddress,
-            // Other order details
-        ]);
+    // Redirect to the thank you page with the order ID
+    return redirect()->route('thank-you')->with('order_id', $order->id);
+}
 
-        // Redirect or perform other actions after placing the order
-        return redirect()->route('user.menu.index')->with('success', 'Order placed successfully!');
+public function thankYou()
+    {
+        // Retrieve the order ID from the session
+        $orderId = session('order_id');
+
+        // Perform any necessary logic here based on the order ID
+        // For example, you can retrieve the order details from the database
+
+        // Clear the order ID from the session
+        session()->forget('order_id');
+
+        // Return the thank-you view or perform other actions as needed
+        return view('user.thank-you', compact('orderId'));
     }
+
 }

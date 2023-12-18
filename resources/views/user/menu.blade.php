@@ -82,7 +82,7 @@
         <form action="{{ route('checkout.store') }}" method="post">
             @csrf
             <!-- Your form fields go here -->
-            <button type="submit" class="btn btn-success">Checkout</button>
+            <a href="{{ route('checkout.index') }}" class="btn btn-success">Checkout</button>
         </form>
 
         <script src="{{ asset('assets/js/cart.js') }}"></script>

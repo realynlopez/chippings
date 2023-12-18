@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\Bagna_blueController;
 use App\Http\Controllers\AdminReservationController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\AdminOrderController;
 
 
 
@@ -42,7 +43,11 @@ Route::prefix('admin')->group(function () {
 
 });
 
+//admin newly registered users
 Route::get('/admin/newly-registered-users', [AdminUserController::class, 'newlyRegisteredUsers'])->name('newlyRegisteredUsers');;
+
+//admin orderlist
+Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
 
 //sales admin
 Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
@@ -81,6 +86,7 @@ Route::get('user/checkout', [CheckoutController::class, 'index'])->name('checkou
 Route::post('user/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 // routes/web.php or routes/api.php
 Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
+Route::get('/thank-you', [CheckoutController::class, 'thankYou'])->name('thank-you');
 
 
 //Table admin

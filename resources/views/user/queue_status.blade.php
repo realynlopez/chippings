@@ -15,7 +15,7 @@
             </div>
         @endif
         <div class="card">
-            <div class="card-header">Queue Status</div>
+            <div class="card-header text-center fw-bold">Queue Status</div>
             <div class="card-body">
                 <h3 class="mt-4 text-center">Current Queue Status</h3>
                 <ul class="list-group justify-content-center">

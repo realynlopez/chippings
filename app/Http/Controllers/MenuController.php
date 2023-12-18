@@ -159,11 +159,5 @@ class MenuController extends Controller
         }
     }
 
-    public function thankYou()
-    {
-        // Perform any necessary logic here
-
-        // Redirect to the menu user page
-        return redirect()->route('user.menu.index')->with('success', 'Thank you! Your order has been placed successfully.');
-    }
+    
 }
