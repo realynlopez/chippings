@@ -11,20 +11,18 @@ class UserDashboardController extends Controller
 {
     public function index()
     {
-    // Fetch available tables with the 'status' attribute
-    $availableTables = Table::whereDoesntHave('reservations')->get(['id', 'status']);
+        // Fetch available tables with the 'status' attribute
+        $availableTables = Table::whereDoesntHave('reservations')->get(['id', 'status']);
 
-    // Commenting out the authentication check for testing purposes
-    // Fetch user's reservations for waiting queue information
-    // $userReservations = auth()->check() ? Reservation::where('user_id', auth()->user()->id)->get() : null;
-    $userReservations = null; // Set $userReservations to null for testing
+        // Fetch user's reservations for waiting queue information
+        $userReservations = auth()->check() ? auth()->user()->reservations : null;
 
-    return view('user.dashboard', [
-        'availableTables' => $availableTables,
-        'userReservations' => $userReservations,
-    ]);
-
+        return view('user.dashboard', [
+            'availableTables' => $availableTables,
+            'userReservations' => $userReservations,
+        ]);
     }
+
     public function showQueueStatus()
     {
         // Retrieve queue information

@@ -94,11 +94,11 @@
                     </span>
                     <h3>Table management</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('admin.admin_reservation') }}">
                     <span class="material-icons-sharp">
                         add
                     </span>
-                    <h3> Add</h3>
+                    <h3> Reservation Management</h3>
                 </a>
                 <a href="{{ route('logout') }}">
                     <span class="material-icons-sharp">
