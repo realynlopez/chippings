@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Queue;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class QueueController extends Controller
 {
     public function addToQueue(Request $request)
@@ -38,4 +38,16 @@ class QueueController extends Controller
 
         return redirect()->route('queue')->with('info', 'No customers in the waiting queue.');
     }
+
+    public function showUserQueue()
+    {
+        // Get the currently logged-in user
+        $user = Auth::user();
+
+        // Fetch the queue items for the user with related reservation information
+        $queue = Queue::with('reservation')->where('customer_name', $user->name)->orderBy('created_at')->get();
+
+        return view('user.queue_status', compact('queue'));
+    }
+
 }

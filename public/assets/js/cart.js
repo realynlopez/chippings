@@ -1,6 +1,6 @@
 // public/js/cart.js
 
-const cartItems = {};
+/*const cartItems = {};
 let isAddingToCart = false;
 
 function addToCart(item) {
@@ -10,29 +10,21 @@ function addToCart(item) {
 
     isAddingToCart = true;
 
-    if (cartItems[item]) {
-        cartItems[item]++;
-    } else {
-        cartItems[item] = 1;
-    }
-
-    // Update the cart table
-    updateCartTable();
-
-    // Reset flag after a short delay to allow subsequent clicks
-    setTimeout(() => {
-        isAddingToCart = false;
-    }, 1000); // You can adjust the delay as needed
-    
     $.ajax({
         type: 'POST',
         url: document.head.querySelector('meta[name="cart-route"]').content, // Get the route dynamically
         data: { itemName: item },
         success: function(response) {
             console.log(response);
+            // Optionally, update the UI or perform other actions on success
         },
         error: function(error) {
             console.error(error);
+            // Handle errors if needed
+        },
+        complete: function() {
+            // Reset flag after the request is complete
+            isAddingToCart = false;
         }
     });
 }
@@ -120,7 +112,7 @@ function displayItemAddedMessage(item) {
     const cartMessage = document.createElement('p');
     cartMessage.textContent = `${item} added to cart`;
     document.getElementById('cart').appendChild(cartMessage);
-}
+}*/
 
 // ...
 

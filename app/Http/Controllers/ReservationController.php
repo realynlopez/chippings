@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Table;
 use App\Models\Reservation;
-use App\Events\TableUpdated;
 use App\Models\Queue;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ReservationController extends Controller
-{    
+{
+    public function __construct()
+    {
+        $this->middleware('auth'); // Ensure that only authenticated users can access reservation features
+    }
+
     public function showAvailableTables()
     {
         $tables = Table::whereDoesntHave('reservations', function ($query) {
@@ -20,22 +25,18 @@ class ReservationController extends Controller
         return view('reservation.available_tables', compact('tables'));
     }
 
-
     public function joinQueue(Request $request)
     {
-        // Validate the request
         $request->validate([
             'table_id' => 'required|exists:tables,id',
         ]);
 
-        // Check if the user is already in the queue
         $existingQueue = Queue::where('user_id', auth()->user()->id)->first();
 
         if ($existingQueue) {
             return redirect()->route('available.tables')->with('error', 'You are already in the queue.');
         }
 
-        // Add user to the queue
         Queue::create([
             'user_id' => auth()->user()->id,
             'table_id' => $request->input('table_id'),
@@ -44,7 +45,6 @@ class ReservationController extends Controller
         return redirect()->route('available.tables')->with('success', 'You have joined the queue successfully.');
     }
 
-   
     public function showBookingForm()
     {
         $availableTables = Table::all();
@@ -52,76 +52,57 @@ class ReservationController extends Controller
         return view('reservation.book_table', compact('availableTables'));
     }
 
-    // ReservationController.php
-    public function storeReservation(Request $request)
-    {
-        // Validate the form data (customize the validation rules based on your requirements)
-        $validatedData = $request->validate([
-            'reservation_date_time' => 'required|date',
-            'number_of_guests' => 'required|integer|min:1',
-            'table_id' => 'required|exists:tables,id',
-            // Add more validation rules as needed
-        ]);
-
-        // Store the reservation in the database
-        $reservation = new Reservation();
-        $reservation->user_id = auth()->user()->id; // Assuming you're using authentication
-        $reservation->table_id = $validatedData['table_id'];
-        $reservation->reservation_date_time = $validatedData['reservation_date_time'];
-        $reservation->number_of_guests = $validatedData['number_of_guests'];
-        // Add more fields as needed
-        $reservation->save();
-
-        // Redirect to the queue status page after successful reservation
-        return redirect()->route('queue.status')->with('success', 'Table reserved successfully!');
-    }
-
     public function reserveTable(Request $request)
     {
-        // Validate the request
         $request->validate([
             'reservation_date_time' => 'required|date',
             'number_of_guests' => 'required|integer|min:1',
             'table_id' => 'required|exists:tables,id',
         ]);
-    
-        // Check table availability
-        $table = Table::find($request->input('table_id'));
-        if (!$table || !$this->isTableAvailable($table, $request->input('reservation_date_time'), $request->input('number_of_guests'))) {
-            return redirect()->route('book.table')->with('error', 'Selected table is not available for the given date and time.');
+
+        try {
+            DB::beginTransaction();
+
+            $table = Table::find($request->input('table_id'));
+
+            // Check if the table exists
+            if (!$table) {
+                return redirect()->route('book.table')->with('error', 'Selected table does not exist.');
+            }
+
+            // Create a reservation with a 'pending' status
+            $reservation = Reservation::create([
+                'user_id' => auth()->user()->id,
+                'table_id' => $request->input('table_id'),
+                'reservation_date_time' => $request->input('reservation_date_time'),
+                'number_of_guests' => $request->input('number_of_guests'),
+                'status' => 'pending',
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('user.dashboard')->with('success', 'Table reservation requested. Admin will review and confirm.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->route('book.table')->with('error', 'An error occurred: ' . $e->getMessage());
         }
-    
-        // Create a reservation
-        Reservation::create([
-            'user_id' => auth()->user()->id,
-            'table_id' => $request->input('table_id'),
-            'reservation_date_time' => $request->input('reservation_date_time'),
-            'number_of_guests' => $request->input('number_of_guests'),
-        ]);
-    
-        // Redirect to the user dashboard with a success message
-        return redirect()->route('user.dashboard')->with('confirmation', 'Waiting for confirmation.')->with('success', 'Table reserved successfully!');
     }
-    
-    /**
-     * Check if the table is available for reservation.
-     *
-     * @param \App\Models\Table $table
-     * @param string $reservationDateTime
-     * @param int $numberOfGuests
-     * @return bool
-     */
+
+
+
     private function isTableAvailable(Table $table, $reservationDateTime, $numberOfGuests)
     {
-        // Check for existing reservations for the specified date and time
+
+        Log::info("Table: " . $table->id);
+        Log::info("Reservation DateTime: " . $reservationDateTime);
+        Log::info("Number of Guests: " . $numberOfGuests);
         $existingReservations = Reservation::where('table_id', $table->id)
             ->where('reservation_date_time', $reservationDateTime)
             ->get();
-    
-        // Check if the table can accommodate the requested number of guests
+
         $totalGuests = $existingReservations->sum('number_of_guests') + $numberOfGuests;
-    
+
         return $totalGuests <= $table->capacity;
     }
-
 }

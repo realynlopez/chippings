@@ -19,13 +19,11 @@ class AdminTableController extends Controller
 
     public function addTable(Request $request)
     {
-        // Validate the request
         $request->validate([
             'table_name' => 'required|string|max:255',
             // Add more validation rules for other fields as needed
         ]);
 
-        // Create a new table in the database
         $table = new Table();
         $table->table_name = $request->input('table_name');
         // Set other properties as needed
@@ -34,6 +32,7 @@ class AdminTableController extends Controller
 
         return redirect()->route('admin.table.management')->with('success', 'Table added successfully!');
     }
+
 
     public function markTableOccupied(Request $request, $id)
     {

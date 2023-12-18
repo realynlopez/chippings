@@ -22,4 +22,9 @@ class MenuItem extends Model
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

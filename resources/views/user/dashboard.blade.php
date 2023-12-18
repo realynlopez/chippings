@@ -28,20 +28,20 @@
 
                 <h3 class="mt-4 text-center">Your Waiting Queue</h3>
                 <ul class="list-group justify-content-center">
-                    @if($userReservations)
-                        @forelse ($userReservations as $reservation)
-                            <li class="list-group-item">
-                                <strong>Reservation ID:</strong> {{ $reservation->id }}<br>
-                                <strong>Table:</strong> {{ $reservation->table_id }}<br>
-                                <strong>Status:</strong> {{ $reservation->status }}<br>
-                                <!-- Add more reservation details as needed -->
-                            </li>
-                        @empty
-                            <li class="list-group-item">
-                                You don't have any reservations. Make a reservation to join the waiting queue.
-                            </li>
-                        @endforelse
+                    @if(!empty($userReservations)) <!-- Add this line to check if $userReservations is not null -->
+                            @foreach ($userReservations as $reservation)
+                                <div>
+                                    <p>Reservation Date: {{ $reservation->reservation_date_time }}</p>
+                                    <p>Number of Guests: {{ $reservation->number_of_guests }}</p>
+                                    <p>Status: {{ ucfirst($reservation->status) }}</p>
+                                </div>
+                            @endforeach
+                        @else
+                        <li class="list-group-item text-center">
+                            You don't have any reservations. Make a reservation to join the waiting queue.
+                        </li>
                     @endif
+                
                 </ul>
 
             </div>

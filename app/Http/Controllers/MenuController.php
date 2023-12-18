@@ -11,11 +11,10 @@ use Illuminate\Support\Facades\Redis;
 use App\Events\OrderCheckedOut;
 use App\Models\Order;
 use App\Models\CartItem;
+use Illuminate\Support\Facades\DB;
 
 class MenuController extends Controller
 {
-    
-
     public function index()
     {
         $menuItems = MenuItem::all();
@@ -119,46 +118,52 @@ class MenuController extends Controller
 
     public function addToCart(Request $request)
     {
-        // Handle the logic to add the item to the cart (you may have this already)
+        $itemId = $request->input('item_id');
+        $menuItem = MenuItem::find($itemId);
 
-        // Notify the admin about the update (you may use events and listeners here)
-        return response()->json(['status' => 'success']);
-    }  
-
-   
-   // Example in your controller method where the user checks out
-   public function checkout(Request $request)
-    {
-        // Assume a user is authenticated; you may need to handle authentication
-        $user = auth()->user();
-
-        // Create a new order
-        $order = new Order([
-            'user_id' => $user->id,
-            'shipping_address' => $request->input('shipping_address'),
-            // Add other order details as needed
-        ]);
-        $order->save();
-
-        // Get the user's cart items
-        $cartItems = CartItem::where('user_id', $user->id)->get();
-
-        // Move cart items to the order
-        foreach ($cartItems as $cartItem) {
-            $order->cartItems()->create([
-                'menu_item_id' => $cartItem->menu_item_id,
-                'quantity' => $cartItem->quantity,
-                // Add other cart item details as needed
-            ]);
-            $cartItem->delete();
+        if (!$menuItem) {
+            return response()->json(['status' => 'error', 'message' => 'Item not found']);
         }
 
-        // You may also want to calculate and store the total amount in the order
+        $cartItem = CartItem::updateOrCreate(
+            ['menu_item_id' => $menuItem->id],
+            ['quantity' => DB::raw('quantity + 1')]
+        );
 
-        // Clear the cart after checkout
-        $user->cartItems()->delete();
+        // Notify the admin or perform other actions as needed
 
-        return redirect()->route('user.menu.index')->with('success', 'Checkout successful!');
+        return response()->json(['status' => 'success']);
+    }
+
+    public function checkout(Request $request)
+    {
+        // Your checkout logic here
+
+        return redirect()->route('checkout.index')->with('success', 'Checkout successful!');
     }
    
+   
+
+    public function userDestroy($id)
+    {
+        try {
+            $menuItem = MenuItem::findOrFail($id);
+            // Add any additional logic specific to user menu deletion
+
+            $menuItem->delete();
+
+            return redirect()->route('user.menu.index')->with('success', 'Menu item deleted successfully!');
+        } catch (\Exception $e) {
+            // Log the error or handle it in another way
+            return redirect()->route('user.menu.index')->with('error', 'An error occurred while deleting the menu item.');
+        }
+    }
+
+    public function thankYou()
+    {
+        // Perform any necessary logic here
+
+        // Redirect to the menu user page
+        return redirect()->route('user.menu.index')->with('success', 'Thank you! Your order has been placed successfully.');
+    }
 }

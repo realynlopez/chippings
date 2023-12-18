@@ -15,4 +15,8 @@ class Order extends Model
         return $this->hasMany(CartItem::class);
     }
 
+
+    protected $fillable = ['name', 'email', /* other fields */];
+
+
 }

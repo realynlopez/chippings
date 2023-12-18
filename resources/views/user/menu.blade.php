@@ -10,6 +10,31 @@
         .menu-card-title {
             font-size: 1.5rem; /* Adjust the font size as needed */
         }
+
+        /* Add custom styles for positioning buttons */
+        .card-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px; /* Adjust the margin as needed */
+        }
+
+        .card-buttons a {
+            margin-right: 10px;
+        }
+
+        /* Add custom styles for grid layout */
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .menu-item {
+            width: 25%;
+            padding: 15px;
+            box-sizing: border-box;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
     </style>
 @endsection
 
@@ -18,7 +43,7 @@
         <h1 class="text-center mt-4 mb-3">Chippings Menu</h1>
 
         <div id="cart">
-            <h3 class="text-center mt-4 mb-3">Cart Items</h3>
+            <!--<h3 class="text-center mt-4 mb-3">Cart Items</h3>-->
             <table class="table">
                 <tbody id="cart-items-body">
                     <!-- Cart items will be displayed here -->
@@ -26,32 +51,39 @@
             </table>
         </div>
         
-        <h3>Menu</h3>
+        <!--<h3>Menu</h3>-->
 
-        @foreach($menuItems as $menuItem)
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h3 class="menu-card-title">{{ $menuItem->name }}</h3>
-                    <p class="card-text">{{ $menuItem->description }}</p>
-                    <p class="card-text">Price: {{ $menuItem->price }}</p>
-                    
-                    <!-- Display image if available -->
-                    @if($menuItem->image)
-                        <img src="{{ asset('storage/' . $menuItem->image) }}" alt="{{ $menuItem->name }}" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
-                    @else
-                        No Image
-                    @endif
+        <div class="menu-container">
+            @foreach($menuItems as $menuItem)
+                <div class="card mb-3 menu-item">
+                    <div class="card-body justify-content-center">
+                        <h3 class="menu-card-title">{{ $menuItem->name }}</h3>
+                        <p class="card-text">{{ $menuItem->description }}</p>
+                        <p class="card-text">Price: {{ $menuItem->price }}</p>
+                        
+                        <!-- Display image if available -->
+                        @if($menuItem->image)
+                            <img src="{{ asset('storage/' . $menuItem->image) }}" alt="{{ $menuItem->name }}" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+                        @else
+                            No Image
+                        @endif
 
-                    <a href="#" class="btn btn-primary" onclick="addToCart('{{ $menuItem->name }}')">Add to cart</a>
-                    <div id="cart" data-checkout-route="{{ route('user.menu.user.checkout') }}">
-                        <button class="btn btn-success" onclick="checkout()">Checkout</button>
+                        <div class="card-buttons">
+                            <a href="#" class="btn btn-primary" onclick="addToCart('{{ $menuItem->name }}')">Add to cart</a>
+                            
+                            <!-- Move the meta tag outside the loop -->
+                            <meta name="cart-route" content="{{ route('user.menu.addToCart') }}">
+                        </div>
                     </div>
-
-                    <!-- Move the meta tag inside the loop -->
-                    <meta name="cart-route" content="{{ route('user.menu.user.addToCart') }}">
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
+
+        <form action="{{ route('checkout.store') }}" method="post">
+            @csrf
+            <!-- Your form fields go here -->
+            <button type="submit" class="btn btn-success">Checkout</button>
+        </form>
 
         <script src="{{ asset('assets/js/cart.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.js"></script>

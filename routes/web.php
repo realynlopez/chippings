@@ -12,6 +12,9 @@ use App\Http\Controllers\AdminTableController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\Bagna_blueController;
+use App\Http\Controllers\AdminReservationController;
+use App\Http\Controllers\CheckoutController;
+
 
 
 // Default route for all users
@@ -63,14 +66,22 @@ Route::group(['prefix' => 'admin/menu', 'as' => 'admin.menu.'], function () {
 
 
 //menu_user 
+// routes/web.php
+
 Route::group(['prefix' => 'user/menu', 'as' => 'user.menu.'], function () {
     Route::get('/', [MenuController::class, 'userIndex'])->name('index');
-    Route::get('/{id}', [MenuController::class, 'userShow'])->name('show');
-    // routes/web.php or routes/api.php
-    Route::post('/user/addToCart', [MenuController::class,'addToCart'])->name('user.addToCart');
-    Route::post('/user/checkout', [MenuController::class, 'checkout'])->name('user.menu.user.checkout');
+    Route::get('/{id}', [CheckoutController::class, 'userShow'])->name('show');
+    Route::post('/addToCart', [MenuController::class, 'addToCart'])->name('addToCart');
+    //Route::post('/checkout', [MenuController::class, 'checkout'])->name('checkout');
+    Route::delete('/menu/{id}', [MenuController::class, 'userDestroy'])->name('userDestroy');
     // Add more user-specific routes as needed
 });
+
+Route::get('user/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('user/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+// routes/web.php or routes/api.php
+Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
+
 
 //Table admin
 Route::get('/admin/table-management', [AdminTableController::class, 'showTableManagementForm'])
@@ -82,8 +93,17 @@ Route::post('/admin/add-table', [AdminTableController::class, 'addTable'])
 Route::post('/admin/mark-occupied/{id}', [AdminTableController::class, 'markTableOccupied'])
 ->name('admin.mark.occupied');
 Route::delete('/admin/delete/table/{id}', [AdminTableController::class, 'deleteTable'])->name('admin.delete.table');
+//admin reservation
+Route::get('/admin/reservations', [AdminReservationController::class, 'index'])->name('admin.reservations');
 
 
+
+
+// Admin reservation management
+// Admin reservation management
+Route::get('/admin/reservation-management', [AdminReservationController::class, 'showReservationManagement'])->name('admin.admin_reservation');
+Route::post('/admin/accept-reservation/{id}', [AdminReservationController::class, 'acceptReservation'])->name('admin.accept.reservation');
+Route::post('/admin/decline-reservation/{id}', [AdminReservationController::class, 'declineReservation'])->name('admin.decline.reservation');
 
 
 // Show available tables

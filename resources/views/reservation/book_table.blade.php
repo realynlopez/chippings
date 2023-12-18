@@ -49,7 +49,7 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Book Table</button>
+                    <button type="submit" class="btn btn-primary mt-2">Book Table</button>
                 </form>
             </div>
         </div>
