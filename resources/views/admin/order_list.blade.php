@@ -2,8 +2,10 @@
 
 @extends('admin.admin-layout')
 @section('title', 'Order Lists | Eskinita By Chippings')
+@extends('include.header')
 @section('content')
     <div class="container">
+
         <h1 class="order text-center">Order List</h1>
 
         <div class="table-responsive">

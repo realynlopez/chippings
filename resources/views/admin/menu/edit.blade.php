@@ -1,6 +1,7 @@
 <!-- resources/views/admin/menu/create.blade.php -->
 
 @extends('layout')
+@extends('include.header')
 
 @section('content')
     <div class="container">

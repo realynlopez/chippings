@@ -9,6 +9,7 @@
 @section('content')
 <body>
 <!-- Navigation Bar -->
+<!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg fixed-top">
     <a class="navbar-brand" href="#">Eskinita by Chippings</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,13 +50,13 @@
         <div class="carousel-item">
         <img src="{{ asset('assets/images/chippings-cover.jpg') }}" class="d-block w-100" alt="Slider Image 2">
             <div class="carousel-caption d-none d-md-block">
-            <a href="#about" class="btn btn-outline-dark btn-lg btn-transparent">about</a>
+            <a href="#about" class="btn btn-outline-dark btn-lg btn-transparent">About</a>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('assets/images/chippings-wbg.jpg') }}" class="d-block w-100" alt="Slider Image 3">
+            <img src="{{ asset('assets/images/chippings-pasko.jpg') }}" class="d-block w-100" alt="Slider Image 3">
             <div class="carousel-caption d-none d-md-block">
-            <a href="#about" class="btn btn-outline-dark btn-lg btn-transparent">about</a>
+            <a href="#about" class="btn btn-outline-dark btn-lgt">About</a>
             </div>
         </div>
     </div>

@@ -18,6 +18,8 @@ use App\Http\Controllers\AdminOrderController;
 
 
 
+
+
 // Default route for all users
 Route::get('/', function () {
     return view('homepage');
@@ -77,8 +79,10 @@ Route::group(['prefix' => 'user/menu', 'as' => 'user.menu.'], function () {
     Route::get('/', [MenuController::class, 'userIndex'])->name('index');
     Route::get('/{id}', [CheckoutController::class, 'userShow'])->name('show');
     Route::post('/addToCart', [MenuController::class, 'addToCart'])->name('addToCart');
-    //Route::post('/checkout', [MenuController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [MenuController::class, 'checkout'])->name('checkout');
     Route::delete('/menu/{id}', [MenuController::class, 'userDestroy'])->name('userDestroy');
+    Route::delete('/removeOneFromCart/{id}', [MenuController::class, 'removeOneFromCart'])->name('removeOneFromCart');
+
     // Add more user-specific routes as needed
 });
 

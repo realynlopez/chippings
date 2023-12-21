@@ -1,7 +1,7 @@
 <!-- admin.reservation_management.blade.php -->
 
 @extends('admin.admin-layout')
-
+@extends('include.header')
 @section('content')
     <div class="container mt-4">
         <h2 class="text-center">Reservation Management</h2>
@@ -20,6 +20,7 @@
                         <thead>
                             <tr>
                                 <th>User ID</th>
+                                <th>User Name</th>
                                 <th>Reservation Date</th>
                                 <th>Number of Guests</th>
                                 <th>Action</th>
@@ -29,6 +30,7 @@
                         @foreach($pendingReservations as $reservation)
                             <tr>
                                 <td>{{ $reservation->user_id }}</td>
+                                <td>{{ $reservation->user->name }}</td> <!-- Added User Name -->
                                 <td>{{ $reservation->reservation_date_time }}</td>
                                 <td>{{ $reservation->number_of_guests }}</td>
                                 <td>

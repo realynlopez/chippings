@@ -1,0 +1,66 @@
+/* styles.css */
+
+/* Add custom styles for small screens */
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        background-color: transparent;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .menu-card-title {
+        font-size: 1.2rem; /* Adjust font size as needed */
+    }
+
+    /* Adjust the width and margin of menu items for small screens */
+    .menu-container {
+        display: flex;
+        flex-direction: column; /* Display menu items in a column on small screens */
+        align-items: center; /* Center items horizontally */
+    }
+
+    .menu-item {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    /* Ensure the image does not exceed the container width */
+    .menu-item img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Add custom styles for larger screens */
+@media (min-width: 769px) {
+    .menu-container {
+        display: flex;
+        flex-wrap: wrap; /* Display menu items in a row on larger screens */
+        justify-content: space-around; /* Adjust as needed */
+    }
+
+    .menu-item {
+        width: 30%; /* Adjust the width of menu items as needed */
+        box-sizing: border-box;
+        margin: 10px 0;
+        text-align: center;
+    }
+}

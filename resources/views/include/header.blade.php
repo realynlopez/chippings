@@ -18,28 +18,33 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mt-3 mb-2">Back to Dashboard</a>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    
+                    
                     <li class="nav-item">
-                        <a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+                        <a class="nav-link" href="{{ route('queue')}}">Queue Management</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('book.table') }}">Book a Table</a>
+                        <a class="nav-link" href="{{ route('admin.menu.index')}}">Menu Management</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('queue.status')}}">Queue</a>
+                        <a class="nav-link" href="{{ route('admin.table.management')}}">Table Management</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.menu.index')}}">Menu Management</a>
+                        <a class="nav-link" href="{{ route('admin.admin_reservation')}}">Reservation Management</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('sales.index')}}">Sales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.menu.index')}}">Sales</a>
+                        <a class="nav-link" href="{{ route('newlyRegisteredUsers')}}">New User</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.menu.index')}}">New User</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.feedback.form')}}">Feedback</a>
+                        <a class="nav-link" href="{{ route('admin.feedback.index')}}">Feedback</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}">Logout</a>

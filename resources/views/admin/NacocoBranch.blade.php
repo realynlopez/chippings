@@ -2,7 +2,7 @@
 @extends('include.header')
 @section('additional_css')
     <!-- Include additional CSS if needed -->
-    <link rel="stylesheet" href="{{ asset('assets/css/branches.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/branch.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/admin_header.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 @endsection
@@ -47,7 +47,7 @@
                     <label for="transaction_date" class="form-label">Transaction Date</label>
                     <input type="date" class="form-control" id="transaction_date" name="transaction_date" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Transaction</button>
+                <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>
 

@@ -118,23 +118,67 @@ class MenuController extends Controller
 
     public function addToCart(Request $request)
     {
-        $itemId = $request->input('item_id');
-        $menuItem = MenuItem::find($itemId);
+        // Validate the request
+        $request->validate([
+            'item_id' => 'required|exists:menu_items,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+    
+        // Get the item details from the database
+        $menuItem = MenuItem::find($request->item_id);
+    
+        // Get the current cart from the session
+        $cart = session()->get('cart', []);
+    
+        // Check if the item is already in the cart
+        if (isset($cart[$menuItem->id])) {
+            // If the item is in the cart, increment the quantity
+            $cart[$menuItem->id]['quantity'] += $request->quantity;
+        } else {
+            // If the item is not in the cart, add it with the specified quantity
+            $cart[$menuItem->id] = [
+                'name' => $menuItem->name,
+                'price' => $menuItem->price,
+                'quantity' => $request->quantity,
+                // Add other item details as needed
+            ];
+        }
+    
+        // Store the updated cart in the session
+        session(['cart' => $cart]);
 
-        if (!$menuItem) {
-            return response()->json(['status' => 'error', 'message' => 'Item not found']);
+        // Redirect back to the menu page
+        return redirect()->route('user.menu.index')->with('success', 'Item added to cart');
         }
 
-        $cartItem = CartItem::updateOrCreate(
-            ['menu_item_id' => $menuItem->id],
-            ['quantity' => DB::raw('quantity + 1')]
-        );
+        public function removeOneFromCart($id)
+        {
+            $cart = session()->get('cart', []);
+        
+            // Check if the item exists in the cart
+            if (isset($cart[$id])) {
+                // Remove one quantity of the item from the cart
+                if ($cart[$id]['quantity'] > 1) {
+                    $cart[$id]['quantity'] -= 1;
+                } else {
+                    unset($cart[$id]);
+                }
+        
+                // Store the updated cart in the session
+                session(['cart' => $cart]);
+        
+                return redirect()->route('user.menu.index')->with('success', 'One item removed from cart');
+            }
+        
+            return redirect()->route('user.menu.index')->with('error', 'Item not found in cart');
+        }
 
-        // Notify the admin or perform other actions as needed
 
-        return response()->json(['status' => 'success']);
-    }
+    
 
+
+
+    
     public function checkout(Request $request)
     {
         // Your checkout logic here

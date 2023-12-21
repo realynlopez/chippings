@@ -15,6 +15,13 @@
             <div class="card-body">
                 <h1 class="text-center mt-4 mb-3">Feedback</h1>
 
+                <!-- Check if there is a feedback flash message -->
+                @if(session('feedback_submitted'))
+                    <div class="alert alert-success">
+                        {{ session('feedback_submitted') }}
+                    </div>
+                @endif
+
                 <form action="{{ route('submit.feedback') }}" method="post">
                     @csrf
                     <div class="form-group">

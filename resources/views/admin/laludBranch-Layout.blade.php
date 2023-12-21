@@ -6,7 +6,7 @@
     <title>@yield('title', 'Transactions')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     @yield('additional_css')
-    <link rel="stylesheet" href="{{ asset('assets/css/branches.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/branch.css') }}">
     <link href="{{ asset('assets/css/admin_header.css') }}" rel="stylesheet">
 
   </head>

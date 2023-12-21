@@ -1,7 +1,13 @@
 <!-- resources/views/checkout/index.blade.php -->
 
-@extends('layout')
-
+@extends('admin.admin-layout')
+@extends('user.header')
+@section('title', 'User Checkout')
+@section('additional_css')
+    <!-- Include additional CSS files for the registration panel here -->
+    <!-- For example, you can link your custom CSS file -->
+    <link href="{{ asset('assets/css/user_header.css') }}" rel="stylesheet">
+@endsection
 @section('content')
     <div class="container">
         <div class="card mt-3">
@@ -21,7 +27,7 @@
                     <form action="{{ route('checkout.placeOrder') }}" method="post">
                     @csrf
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Place Order</button>
+                            <button type="submit" class="btn btn-primary mt-2">Place Order</button>
                         </div>
                     </form>
 

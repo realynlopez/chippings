@@ -10,4 +10,11 @@ canvas#dailySalesChart {
     /* Set the desired height and width for your chart */
     height: 100px;
     width: 200px;
+    border: 1px solid #ccc; 
+}
+
+
+canvas#myChart {
+    color: #fff;
+    background-color: white;
 }

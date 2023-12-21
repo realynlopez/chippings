@@ -85,10 +85,9 @@ class ReservationController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->route('book.table')->with('error', 'An error occurred: ' . $e->getMessage());
+            return redirect()->route('book.table')->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
         }
     }
-
 
 
     private function isTableAvailable(Table $table, $reservationDateTime, $numberOfGuests)

@@ -13,10 +13,10 @@
     <div class="container mt-4 mb-3 justify-content-center">
         <div class="card">
             <div class="card-body">
-                <h2 class="text-center mt-4 mb-3">Book a Tableee</h2>
+                <h2 class="text-center mt-4 mb-3">Book a Table</h2>
                 @if(session('success'))
                     <div class="alert alert-success">
-                {{ session('success') }}
+                        {{ session('success') }}
                     </div>
                 @endif
 
@@ -30,14 +30,21 @@
                     @csrf
 
                     <div class="form-group">
-                        <label for="reservation_date_time">Date and Time:</label>
-                        <input type="datetime-local" name="reservation_date_time" id="reservation_date_time" class="form-control" required>
+                        <label for="reservation_name">Your Name:</label>
+                        <input type="text" name="reservation_name" id="reservation_name" class="form-control" required>
                     </div>
 
                     <div class="form-group">
                         <label for="number_of_guests">Number of Guests:</label>
                         <input type="number" name="number_of_guests" id="number_of_guests" class="form-control" required>
                     </div>
+
+                    <div class="form-group">
+                        <label for="reservation_date_time">Date and Time:</label>
+                        <input type="datetime-local" name="reservation_date_time" id="reservation_date_time" class="form-control" required>
+                    </div>
+
+                    
 
                     <!-- "Select Table" dropdown -->
                     <div class="form-group">

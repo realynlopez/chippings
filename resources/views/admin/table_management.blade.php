@@ -1,8 +1,8 @@
 @extends('admin.admin-layout')
+@extends('include.header')
 
 @section('content')
     <div class="container justify-content-center">
-    <a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mt-3 mb-2">Back to Dashboard</a>
 
         <h2 class="text-center mt-4 mb-3">Table Management</h2>
 

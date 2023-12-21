@@ -1,5 +1,6 @@
+@extends('admin.admin-layout')
 @extends('sales.layout_sales')
-
+@extends('include.header')
 @section('title', 'Eskinit by Chippings | Sales Page')
 
 @section('content')

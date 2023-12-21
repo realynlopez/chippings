@@ -27,8 +27,8 @@
             </ul>
 
             <h3 class="mt-4 text-center">Your Waiting Queue</h3>
-            <ul class="list-group justify-content-center">
-            @forelse ($userReservations as $reservation)
+            <ul class="list-group text-center">
+            @forelse ($userReservations ?? [] as $reservation)
                 <li class="list-group-item text-center">
                     Table {{ $reservation->table->id }} -
                     Status: {{ $reservation->status }}

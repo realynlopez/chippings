@@ -4,6 +4,9 @@ body {
     margin: 0;
     padding: 0;
     justify-content: center;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+
 }
 
 .branch {
@@ -13,7 +16,58 @@ body {
 
 }
 
-.h {
+.btn-primary {
+    color: #000;
+    background-color: #FEBD03;
+    border-color: #FEBD03;
+}
+button.btn.btn-primary:hover {
+    color: #000
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: transparent;
+    border-color: #FEBD03;
+}
+
+a.btn.btn-secondary.mt-3.mb-2 {
+    color: #000;
+    background-color: #FEBD03;
+    border-color: #FEBD03;
+
+}
+
+a.btn.btn-secondary.mt-3.mb-2:hover{
+    background-color: transparent;
+    border-color: #FEBD03;
+}    
+
+.h1, h1{
+    font-weight: bold;
+    text-align: center;
+    font-size: calc(1.375rem + 1.5vw);
+    color: #fff;
+}
+
+.h3 {
     font-family: 'Poppins', sans-serif;
-    text-align: center; 
+    font-size: small;
+    color: #fff;
+
+}
+
+p {
+    font-weight: bold;
+    margin-top: 15px;
+    color: #fff;
+    font-size: large;
+}
+ 
+.white-text {
+    color: #fff;
+}
+
+label.form-label {
+    color: #000;
 }

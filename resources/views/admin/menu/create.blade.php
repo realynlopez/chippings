@@ -1,4 +1,5 @@
 @extends('layout')
+@extends('include.header')
 @section('content')
     <div class="container">
         <a href="{{ route('admin.menu.index') }}" class="btn btn-secondary mt-2 mb-3">Back to Menu Management</a>

@@ -6,35 +6,9 @@
     <!-- Include additional CSS files for the registration panel here -->
     <!-- For example, you can link your custom CSS file -->
     <link href="{{ asset('assets/css/user_header.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/user_menu.css') }}" rel="stylesheet">
     <style>
-        .menu-card-title {
-            font-size: 1.5rem; /* Adjust the font size as needed */
-        }
-
-        /* Add custom styles for positioning buttons */
-        .card-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px; /* Adjust the margin as needed */
-        }
-
-        .card-buttons a {
-            margin-right: 10px;
-        }
-
-        /* Add custom styles for grid layout */
-        .menu-container {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .menu-item {
-            width: 25%;
-            padding: 15px;
-            box-sizing: border-box;
-            margin-right: 10px;
-            margin-left: 10px;
-        }
+        /* Your additional styles go here */
     </style>
 @endsection
 
@@ -43,16 +17,62 @@
         <h1 class="text-center mt-4 mb-3">Chippings Menu</h1>
 
         <div id="cart">
-            <!--<h3 class="text-center mt-4 mb-3">Cart Items</h3>-->
+            <h3 class="text-center mt-4 mb-3">Cart Items</h3>
+            <!-- Calculate total amount -->
+            @php
+                $totalAmount = 0;
+            @endphp
             <table class="table">
+                <thead>        
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Action</th> 
+                        <!-- Add other columns as needed -->
+                    </tr>        
+                </thead>
                 <tbody id="cart-items-body">
-                    <!-- Cart items will be displayed here -->
+                    @if(session('cart'))
+                        @foreach(session('cart') as $itemId => $item)
+                            @php
+                                $totalAmount += $item['price'] * $item['quantity'];
+                            @endphp
+                            <tr>
+                                <td>{{ $item['name'] }}</td>
+                                <td>{{ $item['price'] }}</td>
+                                <td>{{ $item['quantity'] }}</td>
+                                <td>
+                                    <form action="{{ route('user.menu.removeOneFromCart', ['id' => $itemId]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                    </form>
+                                </td>                           
+                            </tr>
+                        @endforeach
+                        <tr>
+                            <td colspan="2"></td>
+                            <td>Total Amount:</td>
+                            <td class="cart-total-amount">PHP {{ $totalAmount }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td> <!-- Updated colspan to 3 -->
+                            <td>
+                                <form action="{{ route('checkout.store') }}" method="post">
+                                    @csrf
+                                    <!-- Your form fields go here -->
+                                    <a href="{{ route('checkout.index') }}" class="btn btn-success mt-2">Checkout</a>
+                                </form>
+                            </td>
+                        </tr>
+
+                    @endif
                 </tbody>
             </table>
         </div>
-        
-        <!--<h3>Menu</h3>-->
 
+        <!--menu-->
         <div class="menu-container">
             @foreach($menuItems as $menuItem)
                 <div class="card mb-3 menu-item">
@@ -68,31 +88,17 @@
                             No Image
                         @endif
 
-                        <div class="card-buttons">
-                            <a href="#" class="btn btn-primary" onclick="addToCart('{{ $menuItem->name }}')">Add to cart</a>
-                            
-                            <!-- Move the meta tag outside the loop -->
-                            <meta name="cart-route" content="{{ route('user.menu.addToCart') }}">
-                        </div>
+                        <form action="{{ route('user.menu.addToCart') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="item_id" value="{{ $menuItem->id }}">
+                            <input type="hidden" name="quantity" value="1"> <!-- You can set a default quantity if needed -->
+                            <!-- Add any other necessary hidden fields -->
+                            <button type="submit" class="btn btn-primary mt-2">Add to cart</button>
+                        </form>
+                        
                     </div>
                 </div>
             @endforeach
         </div>
-
-        <form action="{{ route('checkout.store') }}" method="post">
-            @csrf
-            <!-- Your form fields go here -->
-            <a href="{{ route('checkout.index') }}" class="btn btn-success">Checkout</button>
-        </form>
-
-        <script src="{{ asset('assets/js/cart.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.js"></script>
-        <script>
-            window.Echo.channel('cart-updates')
-                .listen('ItemAddedToCart', (event) => {
-                    // Update your user UI here
-                    console.log(`Item ${event.itemName} added to cart`);
-                });
-        </script>
     </div>
 @endsection

@@ -25,19 +25,28 @@ function fetchSalesData() {
                         datasets: [{
                             label: 'Amount', 
                             data: data.amounts,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
+                            backgroundColor: '#FEBD03',
+                            borderColor: '#FEBD03',
+                            borderWidth: 3
                         }]
                     },
                     options: {
                         scales: {
                             y: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                ticks: {
+                                    color: '#FEBD03', // Change the font color of the y-axis labels
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    color: '#FEBD03', // Change the font color of the x-axis labels
+                                }
                             }
                         }
                     }
                 });
+                
             }
         }
     })

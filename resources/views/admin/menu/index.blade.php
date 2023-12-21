@@ -1,12 +1,11 @@
 @extends('admin.admin-layout')
-
+@extends('include.header')
 @section('title', 'Menu Management')
 <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.js"></script>
 <script src="{{ asset('asstes/js/adminMenu.js') }}"></script>
 
 @section('content')
     <div class="container mt-4">
-        <a href="{{ route('admin.admin-dashboard') }}" class="btn btn-secondary mb-3">Back to Dashboard</a>
         <h1 style="text-align: center;">Menu Management</h1>
 
         <!-- Buttons for Creating and Adding Menu Items -->
